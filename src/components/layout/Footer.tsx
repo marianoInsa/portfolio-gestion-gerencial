@@ -5,7 +5,7 @@ export default function Footer() {
 
   return (
     <footer
-      className="border-t mt-auto"
+      className="mt-auto border-t"
       style={{
         backgroundColor: 'var(--color-primary)',
         borderColor: '#27272A',
@@ -13,9 +13,8 @@ export default function Footer() {
       }}
       role="contentinfo"
     >
-      <div className="section-container py-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Brand */}
+      <div className="section-container section-y-tight">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           <div>
             <h2
               className="text-lg font-bold mb-2"
@@ -23,7 +22,7 @@ export default function Footer() {
             >
               Stakeholders
             </h2>
-            <p className="text-sm leading-relaxed">
+            <p className="max-w-xs text-sm leading-relaxed">
               Equipo de trabajo de la cátedra{' '}
               <span className="font-medium" style={{ color: '#D4D4D8' }}>
                 Gestión Gerencial
@@ -32,7 +31,6 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Navegación */}
           <div>
             <h3
               className="text-xs font-semibold uppercase tracking-wider mb-3"
@@ -49,7 +47,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="hover:text-white transition-colors duration-200"
+                    className="focus-ring rounded-md transition-colors duration-200 hover:text-white"
                     style={{ color: '#A1A1AA' }}
                   >
                     {link.label}
@@ -59,7 +57,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Info académica */}
           <div>
             <h3
               className="text-xs font-semibold uppercase tracking-wider mb-3"
@@ -76,7 +73,7 @@ export default function Footer() {
         </div>
 
         <div
-          className="mt-8 pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-2 text-xs"
+          className="mt-8 flex flex-col items-center justify-between gap-2 border-t pt-6 text-xs sm:flex-row"
           style={{ borderColor: '#27272A' }}
         >
           <p>© {year} Stakeholders. Todos los derechos reservados.</p>

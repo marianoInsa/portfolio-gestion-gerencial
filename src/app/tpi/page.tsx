@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Button, Card, Section, SectionHeading } from '@/components/ui/primitives';
 
 export const metadata: Metadata = {
   title: 'TPI — Trabajo Práctico Integrador',
@@ -32,12 +33,12 @@ const sections = [
 
 export default function TPIPage() {
   return (
-    <div className="section-container py-16 md:py-20">
+    <Section tone="base">
       {/* Breadcrumb */}
       <nav aria-label="Migas de pan" className="text-sm mb-10">
         <ol className="flex items-center gap-2" style={{ color: 'var(--color-muted)' }}>
           <li>
-            <Link href="/" className="hover:underline cursor-pointer">
+            <Link href="/" className="focus-ring rounded-md hover:underline">
               Home
             </Link>
           </li>
@@ -70,19 +71,13 @@ export default function TPIPage() {
           En Desarrollo
         </div>
 
-        <h1
-          className="text-3xl md:text-5xl font-bold leading-tight mb-4"
-          style={{ fontFamily: 'var(--font-heading)', color: 'var(--color-text)' }}
-        >
-          Trabajo Práctico
-          <br />
-          <span className="gradient-text">Integrador</span>
-        </h1>
-
-        <p className="text-base leading-relaxed mb-12" style={{ color: 'var(--color-muted)' }}>
-          El equipo Stakeholders está trabajando en el proyecto integrador. Esta página
-          se actualizará con el contenido completo a medida que avance el cursado.
-        </p>
+        <SectionHeading
+          label="Proyecto"
+          title="Trabajo Practico Integrador"
+          description="El equipo Stakeholders esta trabajando en el proyecto integrador. Esta pagina se actualizara con el contenido completo a medida que avance el cursado."
+          align="center"
+          className="mb-12"
+        />
 
         {/* Progress bar */}
         <div className="mb-12">
@@ -112,13 +107,11 @@ export default function TPIPage() {
         {/* Structural sections (dimmed) */}
         <div className="text-left space-y-4" aria-label="Estructura del TPI (pendiente de completar)">
           {sections.map((section, idx) => (
-            <div
+            <Card
               key={section.id}
-              className="flex items-start gap-4 p-4 rounded-xl border opacity-40"
-              style={{
-                backgroundColor: 'var(--color-surface)',
-                borderColor: 'var(--color-border)',
-              }}
+              variant="outline"
+              padding="sm"
+              className="flex items-start gap-4 opacity-40"
               aria-hidden="true"
             >
               <span
@@ -141,15 +134,16 @@ export default function TPIPage() {
                   {section.text}
                 </p>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
 
         <div className="mt-10">
-          <Link
+          <Button
             href="/"
-            className="inline-flex items-center gap-2 text-sm font-medium cursor-pointer transition-colors duration-200"
-            style={{ color: 'var(--color-cta)' }}
+            variant="ghost"
+            size="md"
+            className="gap-2"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -165,9 +159,9 @@ export default function TPIPage() {
               />
             </svg>
             Volver al Home
-          </Link>
+          </Button>
         </div>
       </div>
-    </div>
+    </Section>
   );
 }

@@ -13,6 +13,18 @@
   --color-muted:     #6B7280;
   --color-border:    #E4E4E7;
   --color-text:      #09090B;
+
+  /* Semantic UI tokens */
+  --radius-card: 1rem;
+  --radius-control: 0.75rem;
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --space-section-tight: 4rem;
+  --space-section-base: 5rem;
+  --space-section-loose: 6rem;
+  --space-section-tight-md: 5rem;
+  --space-section-base-md: 6rem;
+  --space-section-loose-md: 7rem;
 }
 
 /* ─── Base Resets ─────────────────────────────────────── */
@@ -60,6 +72,11 @@ img, video {
   border-radius: 2px;
 }
 
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-cta);
+  outline-offset: 3px;
+}
+
 /* ─── Prefers Reduced Motion ─────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -76,10 +93,47 @@ img, video {
   padding-inline: 1.5rem;
 }
 
+.section-y-tight {
+  padding-block: var(--space-section-tight);
+}
+
+.section-y {
+  padding-block: var(--space-section-base);
+}
+
+.section-y-loose {
+  padding-block: var(--space-section-loose);
+}
+
 @media (min-width: 768px) {
   .section-container {
     padding-inline: 3rem;
   }
+
+  .section-y-tight {
+    padding-block: var(--space-section-tight-md);
+  }
+
+  .section-y {
+    padding-block: var(--space-section-base-md);
+  }
+
+  .section-y-loose {
+    padding-block: var(--space-section-loose-md);
+  }
+}
+
+.surface-outline {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+.surface-elevated {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
 }
 
 .badge {

@@ -1,3 +1,5 @@
+import { Card } from './primitives';
+
 interface EmptyStateProps {
   title: string;
   description: string;
@@ -29,9 +31,10 @@ const icons = {
 
 export default function EmptyState({ title, description, icon = 'clock' }: EmptyStateProps) {
   return (
-    <div
-      className="flex flex-col items-center justify-center text-center py-12 px-6 rounded-2xl border-2 border-dashed"
-      style={{ borderColor: 'var(--color-border)', color: 'var(--color-muted)' }}
+    <Card
+      variant="dashed"
+      className="flex flex-col items-center justify-center px-6 py-12 text-center"
+      style={{ color: 'var(--color-muted)' }}
       role="region"
       aria-label={title}
     >
@@ -51,6 +54,6 @@ export default function EmptyState({ title, description, icon = 'clock' }: Empty
         <span className="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse" aria-hidden="true" />
         Próximamente
       </span>
-    </div>
+    </Card>
   );
 }

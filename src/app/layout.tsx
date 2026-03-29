@@ -40,8 +40,7 @@ export default function RootLayout({
       className={`scroll-smooth ${archivo.variable} ${spaceGrotesk.variable}`}
     >
       <body
-        className="flex flex-col min-h-screen"
-        style={{ backgroundColor: 'var(--color-bg)', fontFamily: 'var(--font-body)' }}
+        className="flex min-h-screen flex-col bg-[var(--color-bg)] [font-family:var(--font-body)]"
       >
         <Header />
         <main id="main-content" className="flex-1" role="main" tabIndex={-1}>

@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import type { TeamMember } from '@/lib/types';
 import { GlowCard } from './spotlight-card';
+import { Card } from './primitives';
 
 interface TeamCardProps {
   member: TeamMember;
@@ -17,17 +18,15 @@ export default function TeamCard({ member }: TeamCardProps) {
       height="auto"
       className="h-full"
     >
-      <article
-        className="group relative rounded-2xl border overflow-hidden cursor-default transition-all duration-300"
-        style={{
-          backgroundColor: 'var(--color-surface)',
-          borderColor: 'var(--color-border)',
-          boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
-        }}
+      <Card
+        as="article"
+        variant="elevated"
+        padding="md"
+        className="group relative h-full cursor-default overflow-hidden transition-all duration-300"
         aria-label={`Perfil de ${member.fullName}`}
       >
         {/* Card inner */}
-        <div className="p-6 flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
           {/* Avatar + Name row */}
           <div className="flex items-center gap-4">
             <div
@@ -73,7 +72,7 @@ export default function TeamCard({ member }: TeamCardProps) {
           {/* Bio */}
           <p
             className="text-sm leading-relaxed"
-            style={{ color: '#52525B' }}
+            style={{ color: 'var(--color-secondary)' }}
           >
             {member.bio}
           </p>
@@ -94,7 +93,7 @@ export default function TeamCard({ member }: TeamCardProps) {
           style={{ backgroundColor: 'var(--color-cta)' }}
           aria-hidden="true"
         />
-      </article>
+      </Card>
     </GlowCard>
   );
 }

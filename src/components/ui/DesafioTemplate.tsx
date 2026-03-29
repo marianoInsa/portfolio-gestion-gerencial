@@ -1,5 +1,6 @@
 import type { Desafio, Evidence } from '@/lib/types';
 import Link from 'next/link';
+import { Card, Section, SectionHeading } from '@/components/ui/primitives';
 
 interface DesafioTemplateProps {
   desafio: Desafio;
@@ -28,45 +29,15 @@ const evidenceIcons: Record<Evidence['type'], React.ReactNode> = {
   ),
 };
 
-function SectionCard({ children, className = '' }: { children: React.ReactNode; className?: string }) {
-  return (
-    <div
-      className={`rounded-2xl border p-6 ${className}`}
-      style={{ backgroundColor: 'var(--color-surface)', borderColor: 'var(--color-border)' }}
-    >
-      {children}
-    </div>
-  );
-}
-
-function SectionHeading({ label, title }: { label: string; title: string }) {
-  return (
-    <div className="mb-4">
-      <span
-        className="text-xs font-semibold uppercase tracking-wider"
-        style={{ color: 'var(--color-cta)' }}
-      >
-        {label}
-      </span>
-      <h2
-        className="text-xl font-bold mt-1"
-        style={{ fontFamily: 'var(--font-heading)', color: 'var(--color-text)' }}
-      >
-        {title}
-      </h2>
-    </div>
-  );
-}
-
 export default function DesafioTemplate({ desafio }: DesafioTemplateProps) {
   return (
-    <article className="section-container py-12 space-y-8">
+    <Section as="article" tone="tight" className="space-y-8">
       {/* Breadcrumb */}
       <nav aria-label="Migas de pan" className="text-sm">
         <ol className="flex items-center gap-2" style={{ color: 'var(--color-muted)' }}>
-          <li><Link href="/" className="hover:underline cursor-pointer">Home</Link></li>
+          <li><Link href="/" className="focus-ring rounded-md hover:underline">Home</Link></li>
           <li aria-hidden="true">/</li>
-          <li><Link href="/desafios/d3" className="hover:underline cursor-pointer">Desafíos</Link></li>
+          <li><Link href="/desafios/d3" className="focus-ring rounded-md hover:underline">Desafios</Link></li>
           <li aria-hidden="true">/</li>
           <li style={{ color: 'var(--color-text)' }} aria-current="page">{desafio.code}</li>
         </ol>
@@ -90,33 +61,33 @@ export default function DesafioTemplate({ desafio }: DesafioTemplateProps) {
 
       {/* Problem + Solution */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <SectionCard>
-          <SectionHeading label="Contexto" title="Problema Abordado" />
+        <Card variant="outline" padding="md">
+          <SectionHeading label="Contexto" title="Problema Abordado" className="mb-4" />
           <p className="text-sm leading-relaxed" style={{ color: '#52525B' }}>
             {desafio.problem}
           </p>
-        </SectionCard>
-        <SectionCard>
-          <SectionHeading label="Respuesta" title="Solución Propuesta" />
+        </Card>
+        <Card variant="outline" padding="md">
+          <SectionHeading label="Respuesta" title="Solucion Propuesta" className="mb-4" />
           <p className="text-sm leading-relaxed" style={{ color: '#52525B' }}>
             {desafio.solution}
           </p>
-        </SectionCard>
+        </Card>
       </div>
 
       {/* Tools */}
-      <SectionCard>
-        <SectionHeading label="Stack" title="Herramientas Utilizadas" />
+      <Card variant="outline" padding="md">
+        <SectionHeading label="Stack" title="Herramientas Utilizadas" className="mb-4" />
         <div className="flex flex-wrap gap-2">
           {desafio.tools.map((tool) => (
             <span key={tool} className="badge">{tool}</span>
           ))}
         </div>
-      </SectionCard>
+      </Card>
 
       {/* Evidences */}
-      <SectionCard>
-        <SectionHeading label="Recursos" title="Evidencias" />
+      <Card variant="outline" padding="md">
+        <SectionHeading label="Recursos" title="Evidencias" className="mb-4" />
         {desafio.evidences.length > 0 ? (
           <ul className="space-y-3" role="list">
             {desafio.evidences.map((ev) => (
@@ -142,7 +113,7 @@ export default function DesafioTemplate({ desafio }: DesafioTemplateProps) {
             Las evidencias estarán disponibles una vez completado el desafío.
           </p>
         )}
-      </SectionCard>
+      </Card>
 
       {/* Reflection — highlighted block */}
       <section
@@ -169,6 +140,6 @@ export default function DesafioTemplate({ desafio }: DesafioTemplateProps) {
           &ldquo;{desafio.reflection}&rdquo;
         </p>
       </section>
-    </article>
+    </Section>
   );
 }
