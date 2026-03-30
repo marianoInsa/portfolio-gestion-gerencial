@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
-import { Exo_2, Inter, JetBrains_Mono, Orbitron } from 'next/font/google';
+import { Exo_2, Inter, JetBrains_Mono, Orbitron, Geist } from 'next/font/google';
 import Footer from '@/components/layout/Footer';
 import NavBar from '@/components/layout/NavBar';
 import './globals.css';
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
   title: {
@@ -49,7 +52,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html
      lang="es"
-     data-scroll-behavior="smooth"
+     data-scroll-behavior="smooth" className={cn("font-sans", geist.variable)}
     >
       <body
         className={`${orbitron.variable} ${exo2.variable} ${inter.variable} ${jetbrainsMono.variable} bg-void-black text-white-photon antialiased`}

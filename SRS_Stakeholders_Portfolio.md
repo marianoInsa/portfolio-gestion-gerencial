@@ -4,7 +4,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.0.0 |
+| Versión | 1.1.0 |
 | Fecha | Marzo 2026 |
 | Equipo | Stakeholders |
 | Estado | Activo |
@@ -15,6 +15,7 @@
 
 | Versión | Fecha | Autor | Descripción |
 |---|---|---|---|
+| 1.1.0 | Mar 2026 | Stakeholders | Plan detallado de modernización con shadcn/ui, roadmap por fases y matriz completa de componentes |
 | 1.0.0 | Mar 2026 | Stakeholders | Versión inicial del documento SRS |
 
 ---
@@ -34,8 +35,10 @@
 11. [Criterios de Calidad del Micrositio](#11-criterios-de-calidad-del-micrositio)
 12. [Roadmap de Desarrollo](#12-roadmap-de-desarrollo)
 13. [Configuración Recomendada de Herramientas](#13-configuración-recomendada-de-herramientas)
+14. [Plan de Modernización con shadcn/ui](#14-plan-de-modernización-con-shadcnui)
 - [Apéndice A — Checklist de Aceptación](#apéndice-a--checklist-de-aceptación)
 - [Apéndice B — Referencias de Implementación para Agentes IA](#apéndice-b--referencias-de-implementación-para-agentes-ia)
+- [Apéndice C — Matriz Completa de Componentes shadcn/ui](#apéndice-c--matriz-completa-de-componentes-shadcnui)
 
 ---
 
@@ -94,6 +97,7 @@ El producto a desarrollar es un micrositio web estático/híbrido de portfolio a
 - [TypeScript 5 Handbook](https://www.typescriptlang.org/docs)
 - [WCAG 2.1 Accessibility Guidelines](https://www.w3.org/TR/WCAG21)
 - [Core Web Vitals](https://web.dev/vitals)
+- [shadcn/ui Documentation](https://ui.shadcn.com/docs/components)
 
 ---
 
@@ -1091,6 +1095,19 @@ La asignatura especifica los siguientes criterios que el micrositio debe evidenc
 | Validar accesibilidad WCAG 2.1 AA con axe DevTools | Equipo | RNF-013 | Alta |
 | Revisión final y deploy a producción | Equipo | — | Alta |
 
+### Sprint 4 — Modernización shadcn/ui (Innovación) (Semana 5–7)
+
+| Tarea | Responsable | RF/RNF cubiertos | Prioridad |
+|---|---|---|---|
+| Integrar componentes base shadcn/ui faltantes (`breadcrumb`, `tabs`, `accordion`, `tooltip`) | Equipo | RF-010, RNF-012 | Alta |
+| Implementar estados de carga y feedback (`skeleton`, `spinner`, `sonner`, `alert`) | Equipo | RNF-001, RNF-012 | Alta |
+| Modernizar navegación mobile con `sheet` y desktop con `navigation-menu` | Equipo | RF-012, RNF-007 | Alta |
+| Mejorar exploración de desafíos con filtros (`input`, `select`, `combobox`, `toggle-group`) | Equipo | RF-009, RNF-007 | Alta |
+| Incorporar visualizaciones con `chart` para trazabilidad de aprendizaje | Equipo | Criterios Sección 11 | Media |
+| Añadir `dialog` y `carousel` para evidencias multimedia | Equipo | RF-010 | Media |
+| Estandarizar estados vacíos con `empty` de shadcn/ui | Equipo | RF-006, RF-007, RF-008, RF-011 | Media |
+| Consolidar tokens visuales cyberpunk en wrappers shadcn | Equipo | RNF-020 | Alta |
+
 ---
 
 ## 13. Configuración Recomendada de Herramientas
@@ -1174,6 +1191,139 @@ export default {
   }
 }
 ```
+
+---
+
+## 14. Plan de Modernización con shadcn/ui
+
+### 14.1 Objetivo Estratégico
+
+Elevar el micrositio desde una experiencia informativa hacia una experiencia de producto interactivo, manteniendo la identidad cyberpunk del equipo Stakeholders y maximizando:
+
+- Diferenciación visual.
+- Calidad de interacción.
+- Trazabilidad del aprendizaje.
+- Eficiencia de implementación para desarrolladores humanos y agentes de IA.
+
+### 14.2 Alcance de Modernización
+
+El plan utiliza el registro `@shadcn` ya configurado en el proyecto e incluye tres capas:
+
+1. Componentes `registry:ui` (56 componentes base) para estandarizar UI accesible.
+2. Componentes `registry:block` (layouts y gráficos prearmados) para acelerar innovación visual.
+3. Componentes `registry:example` como referencia de implementación rápida para agentes IA.
+
+[NOTA] El inventario total del registro actual es de 405 ítems. El alcance obligatorio del presente plan cubre el 100% de los componentes base `registry:ui` y define estrategia para bloques y ejemplos.
+
+### 14.3 Principios de Implementación
+
+1. Mantener la identidad visual existente: no reemplazar el lenguaje cyberpunk, sino potenciarlo con primitives accesibles.
+2. Adoptar por capas: infraestructura UI primero, interacción después, analítica visual al final.
+3. Evitar deuda de estilos: cada componente shadcn debe pasar por wrappers de diseño (`className`, tokens y variantes propias).
+4. Priorizar impacto UX: navegación, feedback, estados y legibilidad antes de sumar complejidad.
+
+### 14.4 Arquitectura de Integración (Humano + IA)
+
+#### 14.4.1 Convención de carpetas recomendada
+
+```text
+src/components/
+  shadcn/
+    ui/                 # componentes base importados desde shadcn
+  composed/
+    navigation/         # wrappers de navegación del proyecto
+    content/            # tarjetas, bloques y layouts de dominio
+    feedback/           # loading, toasts, alerts, empty states
+```
+
+#### 14.4.2 Regla de composición
+
+- `shadcn/ui`: capa base sin lógica de negocio.
+- `composed/*`: capa de negocio con estilos de Stakeholders.
+- `sections/*`: capa final de página.
+
+### 14.5 Plan de Entrega por Fases
+
+#### Fase 1 — Quick Wins (alto impacto, bajo riesgo)
+
+Objetivo: aumentar calidad percibida en navegación y feedback sin cambiar estructura de datos.
+
+Componentes foco:
+- `breadcrumb`, `tabs`, `accordion`, `tooltip`
+- `skeleton`, `spinner`, `sonner`, `alert`
+- `dialog`, `sheet`, `pagination`
+
+Entregables:
+1. Breadcrumb consistente en `/desafios/[slug]`.
+2. Loading states en listados y detalle.
+3. Feedback de acciones y errores con toasts.
+4. Menú mobile en `sheet` con mejor accesibilidad.
+
+#### Fase 2 — Diferenciación (interacción y exploración)
+
+Objetivo: transformar el sitio en una experiencia exploratoria avanzada.
+
+Componentes foco:
+- `command`, `combobox`, `dropdown-menu`, `hover-card`
+- `carousel`, `popover`, `progress`, `table`
+- `chart`
+
+Entregables:
+1. Paleta de comandos para navegación rápida entre secciones y desafíos.
+2. Filtros avanzados para desafíos (estado, herramienta, período).
+3. Visualización de progreso del equipo y evolución de entregables.
+
+#### Fase 3 — Nivel Producto (escalabilidad y operación)
+
+Objetivo: preparar el micrositio para crecer sin pérdida de coherencia.
+
+Componentes foco:
+- `sidebar`, `navigation-menu`, `resizable`, `scroll-area`
+- `field`, `form`, `input-group`, `toggle-group`
+
+Entregables:
+1. Navegación tipo app/documentación (cuando crezca la cantidad de desafíos).
+2. Layout modular adaptable para escritorio y mobile.
+3. Formularios reutilizables para retroalimentación o registro interno de avances.
+
+### 14.6 Matriz de Priorización Ejecutiva
+
+| Prioridad | Criterio | Resultado esperado |
+|---|---|---|
+| Alta | Mejora de navegación, estados y claridad | Reducción de fricción y mayor tiempo de exploración |
+| Media | Mejora de exploración y storytelling visual | Mayor diferenciación frente a portfolios académicos estándar |
+| Baja/Condicional | Funciones especializadas o de futuro | Preparación para crecimiento sin bloquear entregas actuales |
+
+### 14.7 Definición de Hecho (DoD) para cada componente integrado
+
+Un componente shadcn se considera implementado cuando cumple todos los puntos:
+
+1. Accesibilidad mínima validada (focus visible, roles y navegación teclado).
+2. Responsive validado en mobile, tablet y desktop.
+3. Tema cyberpunk aplicado mediante tokens de `globals.css`.
+4. Sin regresiones en lint/build.
+5. Incluye ejemplo de uso en una sección real de la app.
+
+### 14.8 Riesgos y Mitigaciones
+
+| Riesgo | Probabilidad | Impacto | Mitigación |
+|---|---|---|---|
+| Inconsistencia visual entre componentes custom y shadcn | Media | Alta | Crear wrappers de estilo y variantes estándar del proyecto |
+| Sobrecarga de dependencias por uso indiscriminado | Media | Media | Incorporar componentes por fase y medir bundle |
+| Complejidad innecesaria en páginas simples | Alta | Media | Aplicar criterio de valor real por componente |
+| Regresiones de accesibilidad en personalizaciones | Media | Alta | Checklist AA obligatorio por PR |
+
+### 14.9 KPIs de Éxito de la Modernización
+
+| KPI | Línea base | Objetivo |
+|---|---|---|
+| Tiempo medio de exploración por sesión | Baseline actual | +20% |
+| Interacciones con evidencias (click en recursos) | Baseline actual | +30% |
+| Rebote en listado de desafíos | Baseline actual | -15% |
+| Score de accesibilidad Lighthouse | >= 90 | Mantener o mejorar |
+| Satisfacción visual en revisión docente/equipo | Cualitativo | Mejorar de "informativo" a "producto" |
+
+---
 
 ---
 
@@ -1381,6 +1531,87 @@ export default function AvatarCard({ member }: Props) {
 
 ---
 
-*— FIN DEL DOCUMENTO SRS v1.0.0 —*
+## Apéndice C — Matriz Completa de Componentes shadcn/ui
+
+### C.1 Catálogo completo `registry:ui` y aplicación recomendada
+
+| Componente | Aplicación en Stakeholders | Prioridad | Fase |
+|---|---|---|---|
+| accordion | Expandir secciones de reflexión, evidencias o FAQ académica | Alta | 1 |
+| alert | Mensajes de estado de publicación y avisos importantes | Alta | 1 |
+| alert-dialog | Confirmaciones de acciones críticas en futuras ediciones | Baja | 3 |
+| aspect-ratio | Proporción consistente de miniaturas y videos | Media | 2 |
+| avatar | Avatares de integrantes en cards y nav contextual | Media | 2 |
+| badge | Etiquetas de herramientas, estado y categorías | Alta | 1 |
+| breadcrumb | Contexto de navegación en detalle de desafío | Alta | 1 |
+| button | Base unificada de CTA y acciones | Alta | 1 |
+| button-group | Acciones agrupadas en filtros o vistas | Media | 2 |
+| calendar | Timeline o agenda de hitos de cursada | Baja | 3 |
+| card | Contenedor estándar para secciones y previews | Alta | 1 |
+| carousel | Galería de evidencias (imágenes/video) | Media | 2 |
+| chart | Métricas de evolución de aprendizaje | Media | 2 |
+| checkbox | Filtros múltiples por tags/herramientas | Media | 2 |
+| collapsible | Mostrar/ocultar bloques secundarios | Media | 2 |
+| combobox | Buscador inteligente de desafíos | Alta | 2 |
+| command | Paleta de comandos para navegación rápida | Alta | 2 |
+| context-menu | Acciones rápidas sobre tarjetas (desktop) | Baja | 3 |
+| dialog | Modales para ampliar contenido o confirmar acciones | Alta | 1 |
+| drawer | Panel inferior en mobile para filtros | Media | 2 |
+| dropdown-menu | Menús de acciones/ordenamiento | Alta | 2 |
+| empty | Estados vacíos consistentes por sección | Alta | 1 |
+| field | Campos estructurados en formularios complejos | Media | 3 |
+| form | Formularios validados (feedback/registro interno) | Media | 3 |
+| hover-card | Preview contextual de integrantes o recursos | Media | 2 |
+| input | Búsqueda y entrada textual | Alta | 2 |
+| input-group | Entradas con acciones, iconos o botones | Media | 3 |
+| input-otp | Casos especiales de verificación (no prioritario) | Baja | 3 |
+| item | Listados visuales ricos de recursos/hitos | Media | 2 |
+| label | Etiquetado accesible de campos | Alta | 1 |
+| menubar | Navegación de escritorio avanzada | Baja | 3 |
+| navigation-menu | Menú estructurado para crecimiento del sitio | Media | 3 |
+| pagination | Navegación entre páginas de desafíos | Alta | 1 |
+| popover | Ayuda contextual y overlays livianos | Media | 2 |
+| progress | Progreso de cursada, desafíos y entregables | Media | 2 |
+| radio-group | Selección única en filtros/formularios | Media | 2 |
+| resizable | Layout ajustable para paneles comparativos | Baja | 3 |
+| scroll-area | Contenedores con scroll controlado | Media | 2 |
+| select | Filtros por período/estado/herramienta | Alta | 2 |
+| separator | Separación visual consistente entre bloques | Alta | 1 |
+| sheet | Navegación móvil y panel lateral de acciones | Alta | 1 |
+| sidebar | Navegación persistente tipo app/documentación | Media | 3 |
+| skeleton | Carga perceptual y prevención de layout shift | Alta | 1 |
+| slider | Filtro por rangos (dificultad/fecha/puntaje) | Baja | 3 |
+| sonner | Toasts modernos para feedback no intrusivo | Alta | 1 |
+| spinner | Indicador de carga puntual | Media | 1 |
+| switch | Preferencias binarias (vista compacta, etc.) | Media | 2 |
+| table | Vista tabular de métricas/evidencias | Media | 2 |
+| tabs | Organización de contenido largo en paneles | Alta | 1 |
+| textarea | Entradas largas (reflexiones, feedback) | Media | 3 |
+| toggle | Activación rápida de opciones de vista | Media | 2 |
+| toggle-group | Grupo de filtros por estado o tipo | Alta | 2 |
+| tooltip | Ayuda contextual en iconos y acciones | Alta | 1 |
+| kbd | Visualización de atajos de teclado | Media | 2 |
+| native-select | Fallback ligero para casos simples/mobile | Baja | 3 |
+| direction | Utilidad de dirección para i18n futuro | Baja | 3 |
+
+### C.2 Bloques `registry:block` recomendados
+
+| Bloque | Uso sugerido |
+|---|---|
+| `sidebar-01` a `sidebar-16` | Base para navegación escalable cuando crezca el contenido |
+| `dashboard-01` | Referencia para un tablero de progreso académico |
+| `chart-*` | Referencia acelerada para visualizaciones en TPI y desafíos |
+
+### C.3 Guía para agentes IA (ejecución incremental)
+
+1. Integrar máximo 3 a 5 componentes por PR.
+2. Validar accesibilidad y responsive por componente.
+3. No reemplazar componentes custom existentes si no hay mejora medible.
+4. Documentar cada integración con: objetivo, archivos impactados y criterio de aceptación validado.
+5. Priorizar primero Fase 1, luego Fase 2 y por último Fase 3.
+
+---
+
+*— FIN DEL DOCUMENTO SRS v1.1.0 —*
 
 *Equipo Stakeholders · Ingeniería en Sistemas de Información · UTN · 2026*
