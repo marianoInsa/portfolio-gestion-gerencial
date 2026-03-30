@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { challenges } from '@/data/challenges';
-import { ChallengePreviewCard, EmptyState, GlitchTitle, SectionWrapper } from '@/components/ui';
+import { GlitchTitle, SectionWrapper } from '@/components/ui';
+import ChallengesCrudSection from '@/components/sections/ChallengesCrudSection';
 
 export const metadata: Metadata = {
   title: 'Desafios',
@@ -20,18 +21,7 @@ export default function DesafiosPage() {
       </SectionWrapper>
 
       <SectionWrapper>
-        {orderedChallenges.length === 0 ? (
-          <EmptyState
-            title="Sin desafios publicados"
-            message="Todavia no hay desafios cargados. Vuelve pronto para ver nuevos avances."
-          />
-        ) : (
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {orderedChallenges.map((challenge) => (
-              <ChallengePreviewCard key={challenge.id} challenge={challenge} />
-            ))}
-          </div>
-        )}
+        <ChallengesCrudSection initialChallenges={orderedChallenges} />
       </SectionWrapper>
     </main>
   );

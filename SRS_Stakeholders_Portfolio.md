@@ -4,7 +4,7 @@
 
 | Campo | Valor |
 |---|---|
-| Versión | 1.1.0 |
+| Versión | 1.2.0 |
 | Fecha | Marzo 2026 |
 | Equipo | Stakeholders |
 | Estado | Activo |
@@ -15,6 +15,7 @@
 
 | Versión | Fecha | Autor | Descripción |
 |---|---|---|---|
+| 1.2.0 | Mar 2026 | Stakeholders | Simplificación funcional: eliminación de vistas complejas (insights/sidebar/reportes) y definición de CRUD para Desafíos, TPI y Mapas Conceptuales |
 | 1.1.0 | Mar 2026 | Stakeholders | Plan detallado de modernización con shadcn/ui, roadmap por fases y matriz completa de componentes |
 | 1.0.0 | Mar 2026 | Stakeholders | Versión inicial del documento SRS |
 
@@ -56,11 +57,13 @@ El producto a desarrollar es un micrositio web estático/híbrido de portfolio a
 
 - Presentar al equipo Stakeholders y a sus cinco integrantes de manera clara y profesional.
 - Documentar y exhibir los desafíos desarrollados durante la cursada de la asignatura.
-- Incluir secciones preparadas para contenido futuro (RPAs, Mapa Conceptual de equipo, TPI) con estados de "Próximamente".
+- Permitir carga, edición y eliminación (CRUD) de desafíos.
+- Permitir carga, edición y eliminación (CRUD) de registros TPI.
+- Permitir carga, edición y eliminación (CRUD) de mapas conceptuales individuales y del mapa conceptual de equipo.
 - Adherir a un sistema de diseño cyberpunk/futurista con temática de inteligencia artificial.
 - Ser completamente responsive, accesible y con rendimiento óptimo.
 
-**Fuera del alcance:** autenticación de usuarios, CMS dinámico, base de datos, panel de administración.
+**Fuera del alcance:** autenticación de usuarios, CMS dinámico, base de datos y paneles analíticos complejos.
 
 ### 1.3 Definiciones, Acrónimos y Abreviaturas
 
@@ -112,10 +115,10 @@ El sitio opera como una aplicación con rutas gestionadas por Next.js App Router
 ### 2.2 Funciones Principales del Sistema
 
 1. Presentación del equipo y sus integrantes (Home).
-2. Exhibición de desafíos académicos (Cards + Páginas de detalle).
-3. Espacio reservado para Rutas Personales de Aprendizaje individuales.
-4. Espacio reservado para Mapa Conceptual del equipo.
-5. Espacio reservado para el Trabajo Práctico Integrador.
+2. Gestión y exhibición de desafíos académicos (listado, detalle y CRUD).
+3. Gestión y exhibición de mapas conceptuales individuales (CRUD).
+4. Gestión y exhibición del mapa conceptual de equipo (CRUD).
+5. Gestión y exhibición del Trabajo Práctico Integrador (CRUD).
 6. Navegación coherente, accesible y responsive en todos los dispositivos.
 
 ### 2.3 Perfiles de Usuario
@@ -291,11 +294,11 @@ Todos los componentes reutilizables deben residir en `src/components/ui/` y ser 
 | `/#equipo` | Sección: Identificación del equipo (anchor) | 1 | Requerido — Sprint 1 |
 | `/#integrantes` | Sección: Integrantes (anchor) | 1 | Requerido — Sprint 1 |
 | `/#desafios` | Sección: Desafíos (anchor / cards) | 1 | Requerido — Sprint 1 |
-| `/#rpa` | Sección: Rutas Personales de Aprendizaje | 1 | Placeholder — Sprint 2+ |
-| `/#mapa-conceptual` | Sección: Mapa Conceptual del equipo | 1 | Placeholder — Sprint 2+ |
-| `/desafios` | Listado de todos los desafíos | 1 | Requerido — Sprint 2 |
+| `/#rpa` | Sección: Rutas Personales de Aprendizaje (CRUD) | 1 | Requerido — Sprint 3 |
+| `/#mapa-conceptual` | Sección: Mapa Conceptual del equipo (CRUD) | 1 | Requerido — Sprint 3 |
+| `/desafios` | Listado y gestión CRUD de desafíos | 1 | Requerido — Sprint 2 |
 | `/desafios/[slug]` | Detalle de un desafío específico | 2 | Requerido — Sprint 2 |
-| `/tpi` | Sección del Trabajo Práctico Integrador | 1 | Placeholder — Sprint 3+ |
+| `/tpi` | Gestión CRUD del Trabajo Práctico Integrador | 1 | Requerido — Sprint 3 |
 
 ### 5.2 Jerarquía de Navegación
 
@@ -421,28 +424,43 @@ export interface Challenge {
 }
 ```
 
-### 6.3 Tipo: RPAEntry (Ruta Personal de Aprendizaje)
+### 6.3 Tipo: IndividualConceptMap (Mapa Conceptual Individual)
 
 ```typescript
-export interface RPAEntry {
-  memberId: string;       // Referencia al ID del integrante
-  conceptMapUrl: string;  // URL o path al mapa conceptual
-  uploadedAt: string;     // Fecha ISO 8601
-  description?: string;   // Descripción breve opcional
+export interface IndividualConceptMap {
+  id: string;
+  memberId: string;        // Referencia al ID del integrante
+  title: string;
+  conceptMapUrl: string;   // URL o path al mapa conceptual
+  uploadedAt: string;      // Fecha ISO 8601
+  description?: string;    // Descripción breve opcional
 }
 ```
 
-### 6.4 Tipo: TPI
+### 6.4 Tipo: TeamConceptMap (Mapa Conceptual de Equipo)
+
+```typescript
+export interface TeamConceptMap {
+  id: string;
+  title: string;
+  conceptMapUrl: string;
+  uploadedAt: string;
+  description?: string;
+}
+```
+
+### 6.5 Tipo: TPI
 
 ```typescript
 export interface TPIProject {
+  id: string;
   title: string;
   description: string;
   period: string;
   coverImage?: string;
   evidences: Evidence[];
-  reflections: string;   // Reflexión final del equipo
-  isPublished: boolean;  // false hasta que esté listo
+  reflections: string;
+  updatedAt: string;     // Fecha ISO 8601
 }
 ```
 
@@ -525,14 +543,16 @@ export const challenges: Challenge[] = [];
 ```typescript
 import type { TPIProject } from '@/types';
 
-export const tpi: TPIProject = {
-  title: '[TODO]',
-  description: '[TODO]',
-  period: '[TODO]',
-  evidences: [],
-  reflections: '[TODO]',
-  isPublished: false, // Cambiar a true al finalizar la cursada
-};
+export const tpiProjects: TPIProject[] = [];
+```
+
+### 6.8 Datos de Mapas Conceptuales (`src/data/concept-map.ts`)
+
+```typescript
+import type { IndividualConceptMap, TeamConceptMap } from '@/types';
+
+export const individualConceptMaps: IndividualConceptMap[] = [];
+export const teamConceptMaps: TeamConceptMap[] = [];
 ```
 
 ---
@@ -651,18 +671,19 @@ Cada requisito funcional (RF) describe una capacidad que el sistema debe proveer
 
 ---
 
-**`RF-007` — Sección RPA — Estado inicial**
+**`RF-007` — Gestión de mapas conceptuales individuales (CRUD)**
 
 | Campo | Detalle |
 |---|---|
-| Prioridad | Media |
-| Descripción | La sección `'Ruta Personal de Aprendizaje'` debe existir en el Home y mostrar el `EmptyState` hasta que los integrantes carguen sus mapas conceptuales. |
+| Prioridad | Alta |
+| Descripción | La sección `'Ruta Personal de Aprendizaje'` permite cargar, editar y eliminar mapas conceptuales individuales por integrante, con visualización simple en cards. |
 
 **Criterios de aceptación:**
 - La sección tiene su propio anchor `#rpa` para navegación directa.
-- Muestra `<EmptyState>` con título `'Rutas Personales de Aprendizaje'` y mensaje claro.
-- La estructura ya tiene los 5 slots de integrantes listos para recibir contenido.
-- Cuando un integrante tenga su RPA, se muestra una card con preview de su mapa conceptual.
+- Existe acción `'Nuevo mapa'` para crear un registro de mapa individual.
+- Cada registro permite `'Editar'` y `'Eliminar'`.
+- Se valida `memberId`, `title` y `conceptMapUrl` como obligatorios.
+- Al eliminar, se solicita confirmación para evitar borrados accidentales.
 
 ---
 
@@ -670,17 +691,18 @@ Cada requisito funcional (RF) describe una capacidad que el sistema debe proveer
 
 ---
 
-**`RF-008` — Sección Mapa Conceptual — Estado inicial**
+**`RF-008` — Gestión de mapa conceptual de equipo (CRUD)**
 
 | Campo | Detalle |
 |---|---|
-| Prioridad | Media |
-| Descripción | La sección `'Mapa Conceptual'` del equipo existe en el Home pero muestra `EmptyState` hasta que el mapa sea publicado. |
+| Prioridad | Alta |
+| Descripción | La sección `'Mapa Conceptual'` del equipo permite crear, editar y eliminar mapas conceptuales de equipo con vista previa simple (iframe o imagen). |
 
 **Criterios de aceptación:**
 - La sección tiene anchor `#mapa-conceptual`.
-- Muestra `<EmptyState>` con mensaje `'El mapa conceptual del equipo estará disponible al finalizar la cursada'`.
-- La sección puede albergar un iframe, imagen o componente de visualización de mapa conceptual.
+- Existe acción `'Nuevo mapa de equipo'`.
+- Cada mapa de equipo permite `'Editar'` y `'Eliminar'`.
+- La sección puede albergar un iframe, imagen o enlace externo.
 
 ---
 
@@ -690,12 +712,12 @@ Cada requisito funcional (RF) describe una capacidad que el sistema debe proveer
 
 ---
 
-**`RF-009` — Página de listado `/desafios`**
+**`RF-009` — Página de listado `/desafios` + CRUD**
 
 | Campo | Detalle |
 |---|---|
 | Prioridad | Alta |
-| Descripción | La ruta `/desafios` muestra todos los desafíos publicados en formato de grilla de cards. Si no hay desafíos, muestra `EmptyState`. |
+| Descripción | La ruta `/desafios` muestra todos los desafíos en formato simple (grilla o lista) e incluye acciones para crear, editar y eliminar desafíos. |
 
 **Criterios de aceptación:**
 - La página tiene título `'DESAFÍOS'` con efecto `<GlitchTitle>`.
@@ -703,6 +725,9 @@ Cada requisito funcional (RF) describe una capacidad que el sistema debe proveer
 - Cada card muestra: número (`#01`, `#02`...), título, período, tags, extracto del problema y botón `'Ver detalle'`.
 - La grilla es responsive: 1 columna mobile, 2 tablet, 3 desktop.
 - La página tiene metadata SEO (`title`, `description`) apropiada.
+- Existe botón `'Nuevo desafío'`.
+- Cada desafío visible tiene acciones `'Editar'` y `'Eliminar'`.
+- La eliminación solicita confirmación.
 
 ---
 
@@ -734,6 +759,7 @@ Cada requisito funcional (RF) describe una capacidad que el sistema debe proveer
 - Las evidencias de tipo `'video'` se renderizan como iframes de YouTube/Vimeo si la URL lo permite.
 - La página tiene breadcrumbs: `Inicio > Desafíos > [Nombre del Desafío]`.
 - Hay navegación a `'Desafío anterior'` y `'Desafío siguiente'`.
+- Existe acción `'Editar desafío'` desde la página de detalle.
 
 ---
 
@@ -741,18 +767,19 @@ Cada requisito funcional (RF) describe una capacidad que el sistema debe proveer
 
 ---
 
-**`RF-011` — Página TPI — Estado inicial**
+**`RF-011` — Gestión de TPI en `/tpi` (CRUD)**
 
 | Campo | Detalle |
 |---|---|
-| Prioridad | Media |
-| Descripción | La ruta `/tpi` existe y está accesible, mostrando un `EmptyState` atractivo hasta que el TPI sea publicado. |
+| Prioridad | Alta |
+| Descripción | La ruta `/tpi` permite crear, editar y eliminar registros de TPI con estructura simple de título, descripción, evidencias y reflexión. |
 
 **Criterios de aceptación:**
 - La página `/tpi` está accesible y no devuelve 404.
-- Muestra `<EmptyState>` con título `'Trabajo Práctico Integrador'` y mensaje apropiado.
-- La estructura HTML ya está preparada para recibir: título, descripción, evidencias y reflexión.
-- Cuando `isPublished = true` en `tpi.ts`, se muestra el contenido completo del TPI.
+- Existe botón `'Nuevo TPI'`.
+- Cada registro TPI permite `'Editar'` y `'Eliminar'`.
+- Se valida título, período, descripción y reflexión como obligatorios.
+- La interfaz prioriza simplicidad (sin reportes de avances ni paneles analíticos).
 
 ---
 
@@ -931,6 +958,8 @@ La Home page es un Server Component que compone las siguientes secciones en orde
 | 5 | `<RPASection>` | `#rpa` | EmptyState |
 | 6 | `<ConceptMapSection>` | `#mapa-conceptual` | EmptyState |
 
+[NOTA] Se elimina explícitamente el apartado `Insights` de Home para mantener una interfaz simple y funcional.
+
 #### 9.3.1 HeroSection
 
 La sección hero ocupa el `100vh` del viewport inicial. Incluye:
@@ -970,11 +999,11 @@ Muestra los últimos 3 desafíos publicados o `<EmptyState>`. Incluye:
 
 #### 9.3.5 RPASection
 
-En estado vacío muestra `<EmptyState>`. Con datos: grilla de 5 cards, una por integrante, con avatar, nombre y enlace/embed del mapa conceptual.
+Incluye funcionalidades CRUD simples para mapas individuales: crear, editar y eliminar registros por integrante.
 
 #### 9.3.6 ConceptMapSection
 
-En estado vacío muestra `<EmptyState>`. Con datos: imagen o iframe del mapa conceptual con enlace para pantalla completa o descarga.
+Incluye funcionalidades CRUD simples para mapa(s) de equipo: crear, editar y eliminar registros.
 
 ### 9.4 Página Desafíos (`/desafios/page.tsx`)
 
@@ -983,6 +1012,8 @@ En estado vacío muestra `<EmptyState>`. Con datos: imagen o iframe del mapa con
 - Metadata: `title='Desafíos | Stakeholders'`.
 - Hero de sección con título `'DESAFÍOS'`.
 - Grilla responsive de `<ChallengeCard>`s.
+- Acciones CRUD simples: `Nuevo`, `Editar`, `Eliminar`.
+- Se elimina el uso de sidebar para esta página.
 
 ### 9.5 Página Detalle Desafío (`/desafios/[slug]/page.tsx`)
 
@@ -993,8 +1024,10 @@ En estado vacío muestra `<EmptyState>`. Con datos: imagen o iframe del mapa con
 
 ### 9.6 Página TPI (`/tpi/page.tsx`)
 
-- Si `isPublished === false`: muestra `<EmptyState>`.
-- Si `isPublished === true`: muestra título, descripción, evidencias y reflexión final.
+- Lista de registros TPI con vista simple y acciones CRUD.
+- Acción `Nuevo TPI` para alta de registro.
+- Acciones `Editar` y `Eliminar` por registro.
+- Se elimina el reporte de avances de TPI.
 
 ---
 
@@ -1088,25 +1121,22 @@ La asignatura especifica los siguientes criterios que el micrositio debe evidenc
 
 | Tarea | Responsable | RF/RNF cubiertos | Prioridad |
 |---|---|---|---|
-| Cargar RPAs de cada integrante | Cada integrante | RF-007 | Alta |
-| Cargar Mapa Conceptual del equipo | Equipo | RF-008 | Alta |
-| Implementar y cargar página TPI con contenido real | Equipo | RF-011 | Alta |
+| Implementar CRUD de mapas conceptuales individuales | Equipo | RF-007 | Alta |
+| Implementar CRUD de mapa conceptual de equipo | Equipo | RF-008 | Alta |
+| Implementar CRUD de TPI | Equipo | RF-011 | Alta |
 | Revisar todos los textos y metadatos SEO | Equipo | RNF-024 | Media |
 | Validar accesibilidad WCAG 2.1 AA con axe DevTools | Equipo | RNF-013 | Alta |
 | Revisión final y deploy a producción | Equipo | — | Alta |
 
-### Sprint 4 — Modernización shadcn/ui (Innovación) (Semana 5–7)
+### Sprint 4 — Simplificación y Operación (Semana 5–7)
 
 | Tarea | Responsable | RF/RNF cubiertos | Prioridad |
 |---|---|---|---|
-| Integrar componentes base shadcn/ui faltantes (`breadcrumb`, `tabs`, `accordion`, `tooltip`) | Equipo | RF-010, RNF-012 | Alta |
-| Implementar estados de carga y feedback (`skeleton`, `spinner`, `sonner`, `alert`) | Equipo | RNF-001, RNF-012 | Alta |
-| Modernizar navegación mobile con `sheet` y desktop con `navigation-menu` | Equipo | RF-012, RNF-007 | Alta |
-| Mejorar exploración de desafíos con filtros (`input`, `select`, `combobox`, `toggle-group`) | Equipo | RF-009, RNF-007 | Alta |
-| Incorporar visualizaciones con `chart` para trazabilidad de aprendizaje | Equipo | Criterios Sección 11 | Media |
-| Añadir `dialog` y `carousel` para evidencias multimedia | Equipo | RF-010 | Media |
-| Estandarizar estados vacíos con `empty` de shadcn/ui | Equipo | RF-006, RF-007, RF-008, RF-011 | Media |
-| Consolidar tokens visuales cyberpunk en wrappers shadcn | Equipo | RNF-020 | Alta |
+| Simplificar vistas complejas y remover Insights | Equipo | RF-006, RF-009 | Alta |
+| Eliminar sidebar de Desafíos y mantener navegación lineal | Equipo | RF-009, RF-012 | Alta |
+| Eliminar reporte de avances de TPI | Equipo | RF-011 | Alta |
+| Unificar formularios CRUD para Desafíos, TPI y Mapas | Equipo | RF-007, RF-008, RF-009, RF-011 | Alta |
+| Consolidar estados de confirmación/borrado con UI mínima | Equipo | RNF-012 | Media |
 
 ---
 
@@ -1198,29 +1228,28 @@ export default {
 
 ### 14.1 Objetivo Estratégico
 
-Elevar el micrositio desde una experiencia informativa hacia una experiencia de producto interactivo, manteniendo la identidad cyberpunk del equipo Stakeholders y maximizando:
+Mantener una experiencia simple, funcional y mantenible, evitando sobrecarga visual o interacción innecesaria, y maximizando:
 
-- Diferenciación visual.
-- Calidad de interacción.
+- Claridad operativa.
+- Facilidad de uso.
 - Trazabilidad del aprendizaje.
 - Eficiencia de implementación para desarrolladores humanos y agentes de IA.
 
 ### 14.2 Alcance de Modernización
 
-El plan utiliza el registro `@shadcn` ya configurado en el proyecto e incluye tres capas:
+El plan utiliza el registro `@shadcn` ya configurado en el proyecto con enfoque acotado:
 
-1. Componentes `registry:ui` (56 componentes base) para estandarizar UI accesible.
-2. Componentes `registry:block` (layouts y gráficos prearmados) para acelerar innovación visual.
-3. Componentes `registry:example` como referencia de implementación rápida para agentes IA.
+1. Componentes `registry:ui` para formularios CRUD, navegación simple y feedback básico.
+2. Exclusión explícita de bloques analíticos complejos para evitar confusión.
 
-[NOTA] El inventario total del registro actual es de 405 ítems. El alcance obligatorio del presente plan cubre el 100% de los componentes base `registry:ui` y define estrategia para bloques y ejemplos.
+[NOTA] El alcance obligatorio se limita a componentes que aporten simplicidad funcional directa.
 
 ### 14.3 Principios de Implementación
 
 1. Mantener la identidad visual existente: no reemplazar el lenguaje cyberpunk, sino potenciarlo con primitives accesibles.
-2. Adoptar por capas: infraestructura UI primero, interacción después, analítica visual al final.
+2. Adoptar por capas: infraestructura UI primero, CRUD operativo después, mejoras visuales al final.
 3. Evitar deuda de estilos: cada componente shadcn debe pasar por wrappers de diseño (`className`, tokens y variantes propias).
-4. Priorizar impacto UX: navegación, feedback, estados y legibilidad antes de sumar complejidad.
+4. Priorizar impacto UX: legibilidad y acciones claras antes de sumar complejidad.
 
 ### 14.4 Arquitectura de Integración (Humano + IA)
 
@@ -1259,39 +1288,38 @@ Entregables:
 3. Feedback de acciones y errores con toasts.
 4. Menú mobile en `sheet` con mejor accesibilidad.
 
-#### Fase 2 — Diferenciación (interacción y exploración)
+#### Fase 2 — Operación simple (interacción mínima)
 
-Objetivo: transformar el sitio en una experiencia exploratoria avanzada.
+Objetivo: mantener interacción clara y directa para tareas CRUD.
 
 Componentes foco:
-- `command`, `combobox`, `dropdown-menu`, `hover-card`
-- `carousel`, `popover`, `progress`, `table`
-- `chart`
+- `input`, `select`, `textarea`, `dialog`
+- `dropdown-menu`, `alert`, `sonner`
 
 Entregables:
-1. Paleta de comandos para navegación rápida entre secciones y desafíos.
-2. Filtros avanzados para desafíos (estado, herramienta, período).
-3. Visualización de progreso del equipo y evolución de entregables.
+1. Formularios CRUD simples para Desafíos, TPI y Mapas.
+2. Confirmación de acciones críticas (editar/eliminar).
+3. Mensajes de feedback consistentes para alta, edición y baja.
 
-#### Fase 3 — Nivel Producto (escalabilidad y operación)
+#### Fase 3 — Consolidación funcional
 
-Objetivo: preparar el micrositio para crecer sin pérdida de coherencia.
+Objetivo: estabilizar una arquitectura simple, mantenible y sin sobreingeniería.
 
 Componentes foco:
-- `sidebar`, `navigation-menu`, `resizable`, `scroll-area`
 - `field`, `form`, `input-group`, `toggle-group`
+- `table` (listados CRUD simples)
 
 Entregables:
-1. Navegación tipo app/documentación (cuando crezca la cantidad de desafíos).
-2. Layout modular adaptable para escritorio y mobile.
-3. Formularios reutilizables para retroalimentación o registro interno de avances.
+1. Layout limpio y lineal en Desafíos (sin sidebar).
+2. Eliminación de Insights y paneles complejos.
+3. Eliminación de reporte de avances de TPI.
 
 ### 14.6 Matriz de Priorización Ejecutiva
 
 | Prioridad | Criterio | Resultado esperado |
 |---|---|---|
 | Alta | Mejora de navegación, estados y claridad | Reducción de fricción y mayor tiempo de exploración |
-| Media | Mejora de exploración y storytelling visual | Mayor diferenciación frente a portfolios académicos estándar |
+| Media | Robustez de CRUD y consistencia de formularios | Menor error operativo al cargar/editar contenido |
 | Baja/Condicional | Funciones especializadas o de futuro | Preparación para crecimiento sin bloquear entregas actuales |
 
 ### 14.7 Definición de Hecho (DoD) para cada componente integrado
@@ -1341,6 +1369,13 @@ Un componente shadcn se considera implementado cuando cumple todos los puntos:
 | ☐ | Página `/desafios` carga correctamente | Pendiente |
 | ☐ | Cada desafío tiene su página `/desafios/[slug]` funcional | Pendiente |
 | ☐ | Página `/tpi` existe y no devuelve 404 | Pendiente |
+| ☐ | CRUD de desafíos (alta, edición y baja) funcional | Pendiente |
+| ☐ | CRUD de TPI (alta, edición y baja) funcional | Pendiente |
+| ☐ | CRUD de mapas conceptuales individuales funcional | Pendiente |
+| ☐ | CRUD de mapa conceptual de equipo funcional | Pendiente |
+| ☐ | Apartado Insights eliminado de Home | Pendiente |
+| ☐ | Sidebar eliminado de Desafíos | Pendiente |
+| ☐ | Reporte de avances eliminado de TPI | Pendiente |
 | ☐ | Página 404 personalizada funciona | Pendiente |
 | ☐ | RPASection y ConceptMapSection tienen EmptyState o contenido | Pendiente |
 
@@ -1548,37 +1583,37 @@ export default function AvatarCard({ member }: Props) {
 | button-group | Acciones agrupadas en filtros o vistas | Media | 2 |
 | calendar | Timeline o agenda de hitos de cursada | Baja | 3 |
 | card | Contenedor estándar para secciones y previews | Alta | 1 |
-| carousel | Galería de evidencias (imágenes/video) | Media | 2 |
-| chart | Métricas de evolución de aprendizaje | Media | 2 |
+| carousel | Galería de evidencias (imágenes/video) | Baja | 3 |
+| chart | [DESPRIORIZADO] No usar en versión simple | Baja | 3 |
 | checkbox | Filtros múltiples por tags/herramientas | Media | 2 |
 | collapsible | Mostrar/ocultar bloques secundarios | Media | 2 |
-| combobox | Buscador inteligente de desafíos | Alta | 2 |
-| command | Paleta de comandos para navegación rápida | Alta | 2 |
+| combobox | Filtro opcional; usar solo si aporta claridad | Baja | 3 |
+| command | [DESPRIORIZADO] Evitar paleta de comandos en versión simple | Baja | 3 |
 | context-menu | Acciones rápidas sobre tarjetas (desktop) | Baja | 3 |
 | dialog | Modales para ampliar contenido o confirmar acciones | Alta | 1 |
 | drawer | Panel inferior en mobile para filtros | Media | 2 |
 | dropdown-menu | Menús de acciones/ordenamiento | Alta | 2 |
 | empty | Estados vacíos consistentes por sección | Alta | 1 |
 | field | Campos estructurados en formularios complejos | Media | 3 |
-| form | Formularios validados (feedback/registro interno) | Media | 3 |
-| hover-card | Preview contextual de integrantes o recursos | Media | 2 |
+| form | Formularios validados para CRUD de contenido | Alta | 2 |
+| hover-card | Preview contextual opcional | Baja | 3 |
 | input | Búsqueda y entrada textual | Alta | 2 |
 | input-group | Entradas con acciones, iconos o botones | Media | 3 |
 | input-otp | Casos especiales de verificación (no prioritario) | Baja | 3 |
 | item | Listados visuales ricos de recursos/hitos | Media | 2 |
 | label | Etiquetado accesible de campos | Alta | 1 |
 | menubar | Navegación de escritorio avanzada | Baja | 3 |
-| navigation-menu | Menú estructurado para crecimiento del sitio | Media | 3 |
+| navigation-menu | Menú estructurado simple (sin patrones tipo app) | Media | 3 |
 | pagination | Navegación entre páginas de desafíos | Alta | 1 |
 | popover | Ayuda contextual y overlays livianos | Media | 2 |
-| progress | Progreso de cursada, desafíos y entregables | Media | 2 |
+| progress | [DESPRIORIZADO] No usar en versión simple | Baja | 3 |
 | radio-group | Selección única en filtros/formularios | Media | 2 |
-| resizable | Layout ajustable para paneles comparativos | Baja | 3 |
-| scroll-area | Contenedores con scroll controlado | Media | 2 |
+| resizable | [DESPRIORIZADO] No usar en versión simple | Baja | 3 |
+| scroll-area | Uso opcional solo para listados largos | Baja | 3 |
 | select | Filtros por período/estado/herramienta | Alta | 2 |
 | separator | Separación visual consistente entre bloques | Alta | 1 |
 | sheet | Navegación móvil y panel lateral de acciones | Alta | 1 |
-| sidebar | Navegación persistente tipo app/documentación | Media | 3 |
+| sidebar | [ELIMINADO] No usar en Desafíos | Baja | 3 |
 | skeleton | Carga perceptual y prevención de layout shift | Alta | 1 |
 | slider | Filtro por rangos (dificultad/fecha/puntaje) | Baja | 3 |
 | sonner | Toasts modernos para feedback no intrusivo | Alta | 1 |
@@ -1598,9 +1633,9 @@ export default function AvatarCard({ member }: Props) {
 
 | Bloque | Uso sugerido |
 |---|---|
-| `sidebar-01` a `sidebar-16` | Base para navegación escalable cuando crezca el contenido |
+| `sidebar-01` a `sidebar-16` | [NO APLICAR] Excluidos por criterio de simplicidad |
 | `dashboard-01` | Referencia para un tablero de progreso académico |
-| `chart-*` | Referencia acelerada para visualizaciones en TPI y desafíos |
+| `chart-*` | [NO APLICAR] Excluidos por eliminación de Insights |
 
 ### C.3 Guía para agentes IA (ejecución incremental)
 
@@ -1612,6 +1647,6 @@ export default function AvatarCard({ member }: Props) {
 
 ---
 
-*— FIN DEL DOCUMENTO SRS v1.1.0 —*
+*— FIN DEL DOCUMENTO SRS v1.2.0 —*
 
 *Equipo Stakeholders · Ingeniería en Sistemas de Información · UTN · 2026*

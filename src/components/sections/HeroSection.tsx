@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { ChevronDown } from 'lucide-react';
 import { members, TEAM_LOGO, TEAM_NAME } from '@/data/team';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { GlitchTitle, GridBackground, NeonButton, SectionWrapper } from '@/components/ui';
 
 export default function HeroSection() {
@@ -27,7 +28,19 @@ export default function HeroSection() {
           reales de ingenieria en sistemas.
         </p>
 
-        <p className="mt-8 text-sm text-star-light">{members.map((member) => member.fullName).join(' | ')}</p>
+        <div className="mt-8 flex flex-wrap justify-center gap-2">
+          {members.map((member) => (
+            <HoverCard key={member.id}>
+              <HoverCardTrigger className="rounded-md border border-nebula/70 bg-dark-matter/40 px-2.5 py-1 text-sm text-star-light transition-colors hover:border-cyber-cyan hover:text-cyber-cyan">
+                {member.fullName}
+              </HoverCardTrigger>
+              <HoverCardContent className="border border-nebula bg-deep-space text-white-photon">
+                <p className="font-semibold text-cyber-cyan">{member.firstName}</p>
+                <p className="mt-1 text-sm text-star-light">{member.bio}</p>
+              </HoverCardContent>
+            </HoverCard>
+          ))}
+        </div>
 
         <div className="mt-10 flex justify-center">
           <NeonButton href="#integrantes" size="lg">

@@ -12,6 +12,7 @@ Proyecto con stack tecnologico:
 
 ```bash
 bun install
+bun run lint
 bun run build
 bun run dev
 ```

@@ -3,8 +3,19 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Command, Menu } from 'lucide-react';
 import { TEAM_NAME } from '@/data/team';
+import { Button } from '@/components/ui/button';
+import { Kbd } from '@/components/ui/kbd';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 
 const navItems = [
@@ -17,6 +28,10 @@ export default function NavBar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
+  const openCommandPalette = () => {
+    window.dispatchEvent(new Event('open-command-palette'));
+  };
+
   return (
     <nav
       aria-label="Navegacion principal"
@@ -26,15 +41,6 @@ export default function NavBar() {
         <Link href="/" className="font-orbitron text-lg font-black tracking-wider text-cyber-cyan">
           {TEAM_NAME}
         </Link>
-
-        <button
-          type="button"
-          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-nebula text-white-photon md:hidden"
-          aria-label={open ? 'Cerrar menu' : 'Abrir menu'}
-          onClick={() => setOpen((value) => !value)}
-        >
-          {open ? <X size={20} /> : <Menu size={20} />}
-        </button>
 
         <ul className="hidden items-center gap-6 md:flex">
           {navItems.map((item) => {
@@ -54,32 +60,71 @@ export default function NavBar() {
               </li>
             );
           })}
+          <li>
+            <Tooltip>
+              <TooltipTrigger
+                className="inline-flex h-8 items-center gap-2 rounded-lg border border-nebula bg-dark-matter/40 px-3 text-sm font-medium text-star-light hover:border-cyber-cyan hover:text-cyber-cyan"
+                onClick={openCommandPalette}
+              >
+                <Command />
+                Comandos
+                <Kbd>Ctrl+K</Kbd>
+              </TooltipTrigger>
+              <TooltipContent className="border border-nebula bg-deep-space text-white-photon">
+                Buscador rapido del portfolio
+              </TooltipContent>
+            </Tooltip>
+          </li>
         </ul>
-      </div>
 
-      {open ? (
-        <div className="border-t border-nebula bg-dark-matter/95 px-4 py-3 md:hidden">
-          <ul className="space-y-2">
-            {navItems.map((item) => {
-              const isActive = item.href === '/' ? pathname === item.href : pathname.startsWith(item.href);
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    onClick={() => setOpen(false)}
-                    className={cn(
-                      'block rounded-md px-3 py-2 text-sm font-semibold uppercase tracking-wide text-star-light transition-colors hover:bg-nebula/40 hover:text-cyber-cyan',
-                      isActive && 'bg-nebula/40 text-cyber-cyan'
-                    )}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      ) : null}
+        <Sheet open={open} onOpenChange={setOpen}>
+          <SheetTrigger
+            className="inline-flex size-8 items-center justify-center rounded-lg border border-nebula bg-dark-matter/40 text-white-photon hover:border-cyber-cyan hover:text-cyber-cyan md:hidden"
+            aria-label="Abrir menu"
+          >
+            <Menu size={18} />
+          </SheetTrigger>
+          <SheetContent side="right" className="border-nebula bg-deep-space text-white-photon">
+            <SheetHeader>
+              <SheetTitle className="font-orbitron tracking-wide text-cyber-cyan">{TEAM_NAME}</SheetTitle>
+              <SheetDescription className="text-star-light">Navegacion principal del micrositio.</SheetDescription>
+            </SheetHeader>
+
+            <ul className="mt-6 space-y-2 px-4">
+              {navItems.map((item) => {
+                const isActive = item.href === '/' ? pathname === item.href : pathname.startsWith(item.href);
+                return (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      className={cn(
+                        'block rounded-md border border-transparent px-3 py-2 text-sm font-semibold uppercase tracking-wide text-star-light transition-colors hover:border-nebula hover:bg-dark-matter/50 hover:text-cyber-cyan',
+                        isActive && 'border-nebula bg-dark-matter/60 text-cyber-cyan'
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              })}
+              <li className="pt-2">
+                <Button
+                  variant="outline"
+                  className="w-full border-nebula bg-dark-matter/40 text-star-light hover:border-cyber-cyan hover:text-cyber-cyan"
+                  onClick={() => {
+                    setOpen(false);
+                    openCommandPalette();
+                  }}
+                >
+                  <Command />
+                  Abrir comandos
+                </Button>
+              </li>
+            </ul>
+          </SheetContent>
+        </Sheet>
+      </div>
     </nav>
   );
 }

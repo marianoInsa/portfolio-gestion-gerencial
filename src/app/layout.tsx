@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import { Exo_2, Inter, JetBrains_Mono, Orbitron, Geist } from 'next/font/google';
+import CommandPalette from '@/components/layout/CommandPalette';
 import Footer from '@/components/layout/Footer';
 import NavBar from '@/components/layout/NavBar';
+import { Toaster } from '@/components/ui/sonner';
+import { TooltipProvider } from '@/components/ui/tooltip';
 import './globals.css';
 import { cn } from "@/lib/utils";
 
@@ -51,21 +54,26 @@ type RootLayoutProps = {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html
-     lang="es"
-     data-scroll-behavior="smooth" className={cn("font-sans", geist.variable)}
+      lang="es"
+      data-scroll-behavior="smooth"
+      className={cn('dark font-sans', geist.variable)}
     >
       <body
         className={`${orbitron.variable} ${exo2.variable} ${inter.variable} ${jetbrainsMono.variable} bg-void-black text-white-photon antialiased`}
       >
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[100] focus:rounded-md focus:bg-cyber-cyan focus:px-3 focus:py-2 focus:text-void-black"
-        >
-          Saltar al contenido principal
-        </a>
-        <NavBar />
-        <main id="main-content">{children}</main>
-        <Footer />
+        <TooltipProvider delay={150}>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[100] focus:rounded-md focus:bg-cyber-cyan focus:px-3 focus:py-2 focus:text-void-black"
+          >
+            Saltar al contenido principal
+          </a>
+          <NavBar />
+          <main id="main-content">{children}</main>
+          <Footer />
+          <CommandPalette />
+          <Toaster position="top-right" richColors />
+        </TooltipProvider>
       </body>
     </html>
   );
