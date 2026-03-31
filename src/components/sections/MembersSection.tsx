@@ -7,7 +7,7 @@ export default function MembersSection() {
       <div className="mb-8">
         <GlitchTitle text="Integrantes" className="text-4xl md:text-5xl" />
         <p className="mt-3 max-w-2xl text-star-light">
-          Perfiles complementarios que integran analisis, diseno, desarrollo y validacion para cada entrega.
+          Perfiles complementarios que integran análisis, diseño, desarrollo y validación para cada entrega.
         </p>
       </div>
 

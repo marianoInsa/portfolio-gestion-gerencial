@@ -125,7 +125,7 @@ export default async function ChallengeDetailPage({ params }: ChallengeDetailPag
                 Evidencias
               </TabsTrigger>
               <TabsTrigger value="reflexion" className="shrink-0 px-3 text-star-light data-active:text-cyber-cyan">
-                Reflexion
+                Reflexión
               </TabsTrigger>
             </TabsList>
 
@@ -172,6 +172,7 @@ export default async function ChallengeDetailPage({ params }: ChallengeDetailPag
                       <div className="flex flex-wrap gap-3">
                         <Button
                           variant="outline"
+                          nativeButton={false}
                           className="border-nebula bg-dark-matter/50 text-star-light hover:text-cyber-cyan"
                           render={<a href={evidence.url} target="_blank" rel="noreferrer" />}
                         >
@@ -234,7 +235,7 @@ export default async function ChallengeDetailPage({ params }: ChallengeDetailPag
               </section>
 
               <section>
-                <h2 className="font-exo2 text-2xl font-semibold text-hot-pink">Reflexion del Equipo</h2>
+                <h2 className="font-exo2 text-2xl font-semibold text-hot-pink">Reflexión del Equipo</h2>
                 <p className="mt-3 leading-relaxed text-star-light">{challenge.teamReflection}</p>
               </section>
             </TabsContent>

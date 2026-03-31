@@ -26,7 +26,7 @@ export default function TeamSection() {
           <div className="space-y-1 text-sm text-star-light md:text-right">
             <p>{SUBJECT_NAME}</p>
             <p>{UNIVERSITY}</p>
-            <p>Cursada {COURSE_YEAR}</p>
+            <p>Gestión Gerencial {COURSE_YEAR}</p>
           </div>
         </div>
       </div>

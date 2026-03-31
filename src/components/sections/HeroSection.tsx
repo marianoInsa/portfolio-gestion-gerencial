@@ -24,8 +24,8 @@ export default function HeroSection() {
 
         <GlitchTitle text={TEAM_NAME} as="h1" className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-gradient-cyber" />
         <p className="mx-auto mt-6 max-w-3xl text-base leading-relaxed text-star-light md:text-lg">
-          Equipo academico orientado a gestion, tecnologia y pensamiento sistemico para resolver desafios
-          reales de ingenieria en sistemas.
+          Equipo académico orientado a gestión, tecnología y pensamiento sistémico para resolver desafíos
+          reales de ingeniería en sistemas.
         </p>
 
         <div className="mt-8 flex flex-wrap justify-center gap-2">

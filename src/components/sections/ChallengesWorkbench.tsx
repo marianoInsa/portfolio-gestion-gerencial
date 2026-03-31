@@ -197,7 +197,7 @@ export default function ChallengesWorkbench({ challenges }: ChallengesWorkbenchP
                       <div className="rounded-lg border border-nebula/70 bg-dark-matter/45 p-3">
                         <p className="flex items-center gap-2 text-sm font-semibold text-hot-pink">
                           <FolderOpenDot className="size-4" />
-                          Reflexion operativa
+                          Reflexión operativa
                         </p>
                         <p className="mt-2 text-sm leading-relaxed text-star-light">{activeChallenge.teamReflection}</p>
                       </div>

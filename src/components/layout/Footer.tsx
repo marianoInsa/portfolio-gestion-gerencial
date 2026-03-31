@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="mx-auto grid w-full max-w-7xl gap-8 px-4 py-10 md:grid-cols-3 md:px-8">
         <div>
           <p className="font-orbitron text-xl font-bold text-cyber-cyan">{TEAM_NAME}</p>
-          <p className="mt-2 text-sm text-star-light">Portfolio academico del equipo.</p>
+          <p className="mt-2 text-sm text-star-light">Portfolio académico del equipo.</p>
         </div>
 
         <div>
@@ -22,7 +22,7 @@ export default function Footer() {
           <h3 className="font-exo2 text-lg font-semibold text-white-photon">Contexto</h3>
           <p className="mt-2 text-sm text-star-light">{SUBJECT_NAME}</p>
           <p className="text-sm text-star-light">{UNIVERSITY}</p>
-          <p className="text-sm text-star-light">Cursada {COURSE_YEAR}</p>
+          <p className="text-sm text-star-light">Gestión Gerencial {COURSE_YEAR}</p>
         </div>
       </div>
     </footer>

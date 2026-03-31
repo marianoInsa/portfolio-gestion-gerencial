@@ -1,6 +1,5 @@
 import { teamConceptMap } from '@/data/concept-map';
-import { GlitchTitle, SectionWrapper } from '@/components/ui';
-import TeamConceptMapCrudSection from '@/components/sections/team-concept-map-crud-section';
+import { EmptyState, GlitchTitle, SectionWrapper } from '@/components/ui';
 
 export default function ConceptMapSection() {
   return (
@@ -9,20 +8,20 @@ export default function ConceptMapSection() {
         <GlitchTitle text="Mapa Conceptual" className="text-4xl md:text-5xl" />
       </div>
 
-      <TeamConceptMapCrudSection
-        initialItems={
-          teamConceptMap.isPublished
-            ? [
-                {
-                  id: 'mapa-equipo-inicial',
-                  title: teamConceptMap.title,
-                  resourceUrl: teamConceptMap.resourceUrl,
-                  description: 'Mapa conceptual de equipo',
-                },
-              ]
-            : []
-        }
-      />
+      {teamConceptMap.isPublished && teamConceptMap.resourceUrl ? (
+        <article className="rounded-xl border border-nebula bg-dark-matter/45 p-4">
+          <h3 className="font-exo2 text-xl font-semibold text-white-photon">{teamConceptMap.title}</h3>
+          <p className="mt-1 text-sm text-star-light">Mapa conceptual del equipo</p>
+          <a href={teamConceptMap.resourceUrl} target="_blank" rel="noreferrer" className="mt-3 inline-flex text-sm font-semibold text-cyber-cyan">
+            Ver mapa
+          </a>
+        </article>
+      ) : (
+        <EmptyState
+          title="Mapa de equipo en preparacion"
+          message="El mapa conceptual de equipo se publicara cuando este finalizado en los archivos de datos."
+        />
+      )}
     </SectionWrapper>
   );
 }
