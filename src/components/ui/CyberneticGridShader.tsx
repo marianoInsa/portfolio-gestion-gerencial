@@ -103,7 +103,7 @@ export default function CyberneticGridShader() {
       iTime: { value: 0 },
       iResolution: { value: new THREE.Vector2() },
       iMouse: {
-        value: new THREE.Vector2(window.innerWidth / 2, window.innerHeight / 2),
+        value: new THREE.Vector2(0, 0),
       },
     };
 
@@ -123,19 +123,52 @@ export default function CyberneticGridShader() {
       renderer.render(scene, camera);
     };
 
+    let hasReceivedPointerInput = false;
+
+    const updateMouse = (clientX: number, clientY: number) => {
+      const rect = container.getBoundingClientRect();
+      const localX = THREE.MathUtils.clamp(clientX - rect.left, 0, rect.width);
+      const localY = THREE.MathUtils.clamp(clientY - rect.top, 0, rect.height);
+      uniforms.iMouse.value.set(localX, rect.height - localY);
+      hasReceivedPointerInput = true;
+    };
+
     const onResize = () => {
       const rect = container.getBoundingClientRect();
       const width = Math.max(1, Math.floor(rect.width));
       const height = Math.max(1, Math.floor(rect.height));
       renderer.setSize(width, height, false);
       uniforms.iResolution.value.set(width, height);
+
+      if (!hasReceivedPointerInput) {
+        uniforms.iMouse.value.set(width * 0.5, height * 0.5);
+      }
     };
 
     const onPointerMove = (event: PointerEvent) => {
-      const rect = container.getBoundingClientRect();
-      const localX = event.clientX - rect.left;
-      const localY = event.clientY - rect.top;
-      uniforms.iMouse.value.set(localX, rect.height - localY);
+      updateMouse(event.clientX, event.clientY);
+    };
+
+    const onPointerDown = (event: PointerEvent) => {
+      updateMouse(event.clientX, event.clientY);
+    };
+
+    const onTouchStart = (event: TouchEvent) => {
+      const touch = event.touches[0] ?? event.changedTouches[0];
+      if (!touch) {
+        return;
+      }
+
+      updateMouse(touch.clientX, touch.clientY);
+    };
+
+    const onTouchMove = (event: TouchEvent) => {
+      const touch = event.touches[0] ?? event.changedTouches[0];
+      if (!touch) {
+        return;
+      }
+
+      updateMouse(touch.clientX, touch.clientY);
     };
 
     let rafId = 0;
@@ -171,6 +204,9 @@ export default function CyberneticGridShader() {
 
     window.addEventListener('resize', onResize);
     window.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('pointerdown', onPointerDown, { passive: true });
+    window.addEventListener('touchstart', onTouchStart, { passive: true });
+    window.addEventListener('touchmove', onTouchMove, { passive: true });
     document.addEventListener('visibilitychange', onVisibilityChange);
 
     onResize();
@@ -187,6 +223,9 @@ export default function CyberneticGridShader() {
       resizeObserver.disconnect();
       window.removeEventListener('resize', onResize);
       window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerdown', onPointerDown);
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchmove', onTouchMove);
       document.removeEventListener('visibilitychange', onVisibilityChange);
 
       const canvas = renderer.domElement;

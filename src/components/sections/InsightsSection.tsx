@@ -157,26 +157,32 @@ export default function InsightsSection() {
             <CardDescription className="text-star-light">Resumen operativo por desafio.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow className="border-nebula hover:bg-transparent">
-                  <TableHead className="text-star-light">Desafio</TableHead>
-                  <TableHead className="text-star-light">Periodo</TableHead>
-                  <TableHead className="text-right text-star-light">Evidencias</TableHead>
-                  <TableHead className="text-right text-star-light">Herramientas</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {challenges.map((challenge) => (
-                  <TableRow key={challenge.id} className="border-nebula/70 hover:bg-dark-matter/50">
-                    <TableCell className="font-semibold text-white-photon">#{String(challenge.number).padStart(2, "0")}</TableCell>
-                    <TableCell className="text-star-light">{challenge.period}</TableCell>
-                    <TableCell className="text-right text-star-light">{challenge.evidences.length}</TableCell>
-                    <TableCell className="text-right text-star-light">{challenge.tools.length}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <div className="space-y-2">
+              <p className="text-xs text-star-light md:hidden">Desliza horizontalmente para ver todas las columnas.</p>
+              <div className="relative">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="border-nebula hover:bg-transparent">
+                      <TableHead className="text-star-light">Desafio</TableHead>
+                      <TableHead className="text-star-light">Periodo</TableHead>
+                      <TableHead className="text-right text-star-light">Evidencias</TableHead>
+                      <TableHead className="text-right text-star-light">Herramientas</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {challenges.map((challenge) => (
+                      <TableRow key={challenge.id} className="border-nebula/70 hover:bg-dark-matter/50">
+                        <TableCell className="font-semibold text-white-photon">#{String(challenge.number).padStart(2, "0")}</TableCell>
+                        <TableCell className="text-star-light">{challenge.period}</TableCell>
+                        <TableCell className="text-right text-star-light">{challenge.evidences.length}</TableCell>
+                        <TableCell className="text-right text-star-light">{challenge.tools.length}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+                <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-deep-space/95 to-transparent md:hidden" />
+              </div>
+            </div>
           </CardContent>
         </Card>
 
@@ -187,7 +193,7 @@ export default function InsightsSection() {
               Navegacion rapida por evidencias clave de cada desafio.
             </CardDescription>
           </CardHeader>
-          <CardContent className="px-10">
+          <CardContent className="px-4 sm:px-10">
             <Carousel className="w-full">
               <CarouselContent>
                 {challenges.map((challenge) => {

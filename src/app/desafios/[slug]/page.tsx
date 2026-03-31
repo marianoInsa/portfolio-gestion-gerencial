@@ -117,14 +117,14 @@ export default async function ChallengeDetailPage({ params }: ChallengeDetailPag
       <SectionWrapper>
         <article className="rounded-2xl border border-nebula bg-deep-space/70 p-6 md:p-8">
           <Tabs defaultValue="contexto" className="w-full">
-            <TabsList className="mb-6 bg-dark-matter/80">
-              <TabsTrigger value="contexto" className="text-star-light data-active:text-cyber-cyan">
+            <TabsList className="mb-6 w-full max-w-full justify-start gap-1 overflow-x-auto bg-dark-matter/80 p-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              <TabsTrigger value="contexto" className="shrink-0 px-3 text-star-light data-active:text-cyber-cyan">
                 Contexto
               </TabsTrigger>
-              <TabsTrigger value="evidencias" className="text-star-light data-active:text-cyber-cyan">
+              <TabsTrigger value="evidencias" className="shrink-0 px-3 text-star-light data-active:text-cyber-cyan">
                 Evidencias
               </TabsTrigger>
-              <TabsTrigger value="reflexion" className="text-star-light data-active:text-cyber-cyan">
+              <TabsTrigger value="reflexion" className="shrink-0 px-3 text-star-light data-active:text-cyber-cyan">
                 Reflexion
               </TabsTrigger>
             </TabsList>

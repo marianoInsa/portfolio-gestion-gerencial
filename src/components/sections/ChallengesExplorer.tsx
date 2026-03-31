@@ -234,15 +234,15 @@ export default function ChallengesExplorer({ challenges }: ChallengesExplorerPro
           <div className="space-y-1">
             <p className="text-xs uppercase tracking-wider text-star-light">Exploracion avanzada</p>
             <Popover open={jumpOpen} onOpenChange={setJumpOpen}>
-              <PopoverTrigger className="inline-flex w-full items-center justify-between gap-2 rounded-lg border border-nebula bg-dark-matter/50 px-3 py-2 text-left text-sm text-white-photon hover:text-cyber-cyan sm:w-[360px]">
-                <span>
+              <PopoverTrigger className="inline-flex w-full items-center justify-between gap-2 rounded-lg border border-nebula bg-dark-matter/50 px-3 py-2 text-left text-sm text-white-photon hover:text-cyber-cyan sm:w-[min(360px,calc(100vw-3rem))]">
+                <span className="truncate">
                   {jumpValue
                     ? (jumpOptions.find((option) => option.slug === jumpValue)?.label ?? "Ir a un desafio")
                     : "Ir a un desafio"}
                 </span>
                 <ChevronsUpDown className="size-4 opacity-70" />
               </PopoverTrigger>
-              <PopoverContent className="w-[360px] border border-nebula bg-deep-space p-0 text-white-photon" align="start">
+              <PopoverContent className="w-[min(360px,calc(100vw-3rem))] border border-nebula bg-deep-space p-0 text-white-photon" align="start">
                 <Command className="bg-transparent text-white-photon">
                   <CommandInput placeholder="Buscar desafio por numero o titulo" />
                   <CommandList>

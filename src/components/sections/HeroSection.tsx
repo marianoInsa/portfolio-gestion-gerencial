@@ -6,7 +6,7 @@ import { GlitchTitle, GridBackground, NeonButton, SectionWrapper } from '@/compo
 
 export default function HeroSection() {
   return (
-    <SectionWrapper className="relative flex min-h-[calc(100vh-4rem)] items-center overflow-hidden">
+    <SectionWrapper className="relative flex min-h-[calc(100vh-4rem)] min-h-[calc(100svh-4rem)] items-center overflow-hidden md:min-h-[calc(100dvh-4rem)]">
       <GridBackground opacity={0.3} gridSize={52} />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,245,255,0.16),transparent_45%),radial-gradient(circle_at_80%_10%,rgba(155,48,255,0.18),transparent_42%)]" />
 
@@ -22,7 +22,7 @@ export default function HeroSection() {
           />
         </div>
 
-        <GlitchTitle text={TEAM_NAME} as="h1" className="text-5xl md:text-7xl lg:text-8xl text-gradient-cyber" />
+        <GlitchTitle text={TEAM_NAME} as="h1" className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-gradient-cyber" />
         <p className="mx-auto mt-6 max-w-3xl text-base leading-relaxed text-star-light md:text-lg">
           Equipo academico orientado a gestion, tecnologia y pensamiento sistemico para resolver desafios
           reales de ingenieria en sistemas.
