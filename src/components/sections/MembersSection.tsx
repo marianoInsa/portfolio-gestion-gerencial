@@ -20,7 +20,11 @@ export default function MembersSection() {
         </p>
       </div>
 
-      <Carousel className="relative w-full" opts={{ align: 'center', loop: true }}>
+      <Carousel
+        className="relative w-full"
+        opts={{ align: 'center', loop: true }}
+        aria-label="Carrusel de integrantes"
+      >
         <CarouselContent className="-ml-4">
           {members.map((member) => (
             <CarouselItem key={member.id} className="pl-4 md:basis-[88%] lg:basis-[72%]">
