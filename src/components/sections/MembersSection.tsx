@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { cn } from '@/lib/utils';
 import { members } from '@/data/team';
 import {
   AvatarCard,
@@ -64,14 +65,14 @@ export default function MembersSection() {
             return (
               <CarouselItem
                 key={member.id}
-                className={[
+                className={cn(
                   'pl-4 md:basis-[88%] lg:basis-[72%] transition-all duration-500 ease-out',
                   prefersReducedMotion
                     ? 'opacity-100 scale-100'
                     : isActive
                       ? 'scale-100 opacity-100'
-                      : 'scale-[0.92] opacity-70 md:blur-[0.5px]',
-                ].join(' ')}
+                      : 'scale-[0.92] opacity-70'
+                )}
               >
                 <AvatarCard member={member} />
               </CarouselItem>
