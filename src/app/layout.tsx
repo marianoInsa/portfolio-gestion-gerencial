@@ -17,6 +17,9 @@ export const metadata: Metadata = {
     template: '%s | Stakeholders',
   },
   description: 'Portfolio academico del equipo Stakeholders - Ingenieria en Sistemas de Informacion.',
+  icons: {
+    icon: '/assets/logo.webp',
+  },
   openGraph: {
     title: 'Stakeholders - Portfolio',
     description: 'Micrositio academico del equipo Stakeholders.',
