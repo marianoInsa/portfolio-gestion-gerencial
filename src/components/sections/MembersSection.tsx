@@ -84,7 +84,7 @@ export default function MembersSection() {
       </Carousel>
 
       {/* Pagination indicators */}
-      <div className="mt-6 flex items-center justify-center gap-2" aria-label="Navegación de integrantes">
+      <nav className="mt-4 flex items-center justify-center gap-2" aria-label="Navegación de integrantes">
         {members.map((member, index) => {
           const isActive = index === selectedIndex;
 
@@ -94,15 +94,15 @@ export default function MembersSection() {
               type="button"
               onClick={() => api?.scrollTo(index)}
               aria-label={`Ir al integrante ${index + 1}`}
-              aria-pressed={isActive}
+              aria-current={isActive ? 'page' : undefined}
               className={cn(
-                'h-2.5 rounded-full transition-all duration-300',
-                isActive ? 'w-8 bg-cyber-cyan' : 'w-2.5 bg-white/30 hover:bg-white/50'
+                'h-3.5 rounded-full transition-all duration-300',
+                isActive ? 'w-8 bg-cyber-cyan' : 'w-3.5 bg-white/30 hover:bg-white/50'
               )}
             />
           );
         })}
-      </div>
+      </nav>
     </SectionWrapper>
   );
 }
