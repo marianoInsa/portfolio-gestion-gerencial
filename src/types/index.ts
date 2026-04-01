@@ -10,6 +10,7 @@ export interface Member {
   fullName: string;
   firstName: string;
   avatarPath: string;
+  youtubeUrl: string;
   roles: MemberRole[];
   strengths: string[];
   interests: string[];

@@ -50,6 +50,22 @@ export default function AvatarCard({ member }: AvatarCardProps) {
         <h3 className="font-exo2 text-xl font-bold text-white-photon">{member.fullName}</h3>
         <p className="text-sm leading-relaxed text-star-light">{member.bio}</p>
 
+        {member.youtubeUrl && (
+          <div className="w-full overflow-hidden rounded-lg border border-electric-purple/30">
+            <iframe
+              width="100%"
+              height="200"
+              src={member.youtubeUrl}
+              title={`Video presentación ${member.firstName}`}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              loading="lazy"
+              className="block"
+            />
+          </div>
+        )}
+
         <div className="flex flex-wrap justify-center gap-2">
           {member.roles.map((role) => (
             <Badge key={role} color="purple">

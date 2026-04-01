@@ -23,3 +23,9 @@ pnpm-debug.log*
 
 # typescript
 *.tsbuildinfo
+
+# private agent/mcp/skills config
+.agent/
+.agents/
+.vscode/mcp.json
+skills-lock.json
