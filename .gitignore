@@ -27,6 +27,7 @@ pnpm-debug.log*
 # private agent/mcp/skills config
 .agent/
 .agents/
+.superpowers/
 .cursor/
 .github/prompts/
 docs/superpowers/
