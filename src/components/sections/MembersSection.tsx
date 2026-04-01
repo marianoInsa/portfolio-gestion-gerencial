@@ -82,6 +82,27 @@ export default function MembersSection() {
         <CarouselPrevious className="hidden md:flex" />
         <CarouselNext className="hidden md:flex" />
       </Carousel>
+
+      {/* Pagination indicators */}
+      <div className="mt-6 flex items-center justify-center gap-2" aria-label="Navegación de integrantes">
+        {members.map((member, index) => {
+          const isActive = index === selectedIndex;
+
+          return (
+            <button
+              key={member.id}
+              type="button"
+              onClick={() => api?.scrollTo(index)}
+              aria-label={`Ir al integrante ${index + 1}`}
+              aria-pressed={isActive}
+              className={cn(
+                'h-2.5 rounded-full transition-all duration-300',
+                isActive ? 'w-8 bg-cyber-cyan' : 'w-2.5 bg-white/30 hover:bg-white/50'
+              )}
+            />
+          );
+        })}
+      </div>
     </SectionWrapper>
   );
 }
