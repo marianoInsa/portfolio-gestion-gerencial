@@ -1,5 +1,14 @@
 import { members } from '@/data/team';
-import { AvatarCard, GlitchTitle, SectionWrapper } from '@/components/ui';
+import {
+  AvatarCard,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  GlitchTitle,
+  SectionWrapper,
+} from '@/components/ui';
 
 export default function MembersSection() {
   return (
@@ -11,11 +20,17 @@ export default function MembersSection() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {members.map((member) => (
-          <AvatarCard key={member.id} member={member} />
-        ))}
-      </div>
+      <Carousel className="relative w-full" opts={{ align: 'center', loop: true }}>
+        <CarouselContent className="-ml-4">
+          {members.map((member) => (
+            <CarouselItem key={member.id} className="pl-4 md:basis-[88%] lg:basis-[72%]">
+              <AvatarCard member={member} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="hidden md:flex" />
+        <CarouselNext className="hidden md:flex" />
+      </Carousel>
     </SectionWrapper>
   );
 }
