@@ -51,6 +51,7 @@ function Carousel({
   children,
   ...props
 }: React.ComponentProps<"div"> & CarouselProps) {
+  const isLoop = Boolean(opts?.loop)
   const [carouselRef, api] = useEmblaCarousel(
     {
       ...opts,
@@ -58,14 +59,14 @@ function Carousel({
     },
     plugins
   )
-  const [canScrollPrev, setCanScrollPrev] = React.useState(false)
-  const [canScrollNext, setCanScrollNext] = React.useState(false)
+  const [canScrollPrev, setCanScrollPrev] = React.useState(Boolean(opts?.loop))
+  const [canScrollNext, setCanScrollNext] = React.useState(Boolean(opts?.loop))
 
   const onSelect = React.useCallback((api: CarouselApi) => {
     if (!api) return
-    setCanScrollPrev(api.canScrollPrev())
-    setCanScrollNext(api.canScrollNext())
-  }, [])
+    setCanScrollPrev(isLoop ? true : api.canScrollPrev())
+    setCanScrollNext(isLoop ? true : api.canScrollNext())
+  }, [isLoop])
 
   const scrollPrev = React.useCallback(() => {
     api?.scrollPrev()
@@ -101,6 +102,7 @@ function Carousel({
 
     return () => {
       api?.off("select", onSelect)
+      api?.off("reInit", onSelect)
     }
   }, [api, onSelect])
 
@@ -177,7 +179,7 @@ function CarouselPrevious({
   size = "icon-sm",
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { orientation, scrollPrev, canScrollPrev } = useCarousel()
+  const { orientation, scrollPrev, canScrollPrev, opts } = useCarousel()
 
   return (
     <Button
@@ -191,7 +193,7 @@ function CarouselPrevious({
           : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
-      disabled={!canScrollPrev}
+      disabled={opts?.loop ? false : !canScrollPrev}
       onClick={scrollPrev}
       {...props}
     >
@@ -207,7 +209,7 @@ function CarouselNext({
   size = "icon-sm",
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { orientation, scrollNext, canScrollNext } = useCarousel()
+  const { orientation, scrollNext, canScrollNext, opts } = useCarousel()
 
   return (
     <Button
@@ -221,7 +223,7 @@ function CarouselNext({
           : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
-      disabled={!canScrollNext}
+      disabled={opts?.loop ? false : !canScrollNext}
       onClick={scrollNext}
       {...props}
     >

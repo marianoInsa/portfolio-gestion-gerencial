@@ -18,17 +18,6 @@ import {
 export default function MembersSection() {
   const [api, setApi] = useState<CarouselApi | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const updatePreference = () => setPrefersReducedMotion(mediaQuery.matches);
-
-    updatePreference();
-    mediaQuery.addEventListener('change', updatePreference);
-
-    return () => mediaQuery.removeEventListener('change', updatePreference);
-  }, []);
 
   useEffect(() => {
     if (!api) return;
@@ -53,35 +42,38 @@ export default function MembersSection() {
         </p>
       </div>
 
-      <Carousel
-        className="relative w-full"
-        opts={{ align: 'center', loop: true }}
-        setApi={setApi}
-        aria-label="Carrusel de integrantes"
-      >
-        <CarouselContent className="-ml-4">
-          {members.map((member, index) => {
-            const isActive = index === selectedIndex;
-            return (
-              <CarouselItem
-                key={member.id}
-                className={cn(
-                  'pl-4 md:basis-[88%] lg:basis-[72%] transition-all duration-500 ease-out',
-                  prefersReducedMotion
-                    ? 'opacity-100 scale-100'
-                    : isActive
-                      ? 'scale-100 opacity-100'
-                      : 'scale-[0.92] opacity-70'
-                )}
-              >
-                <AvatarCard member={member} />
-              </CarouselItem>
-            );
-          })}
-        </CarouselContent>
-        <CarouselPrevious className="hidden md:flex" />
-        <CarouselNext className="hidden md:flex" />
-      </Carousel>
+      <div className="relative">
+        <Carousel
+          className="relative w-full"
+          opts={{ align: 'center', loop: true }}
+          setApi={setApi}
+          aria-label="Carrusel de integrantes"
+        >
+          <CarouselContent className="py-2">
+            {members.map((member) => {
+              return (
+                <CarouselItem
+                  key={member.id}
+                  className="pl-4 basis-[90%] md:basis-[74%] lg:basis-[58%] xl:basis-[50%]"
+                >
+                  <AvatarCard member={member} />
+                </CarouselItem>
+              );
+            })}
+          </CarouselContent>
+          <CarouselPrevious className="hidden md:flex" />
+          <CarouselNext className="hidden md:flex" />
+        </Carousel>
+
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-2 left-0 z-10 hidden w-12 bg-gradient-to-r from-void-black via-void-black/85 to-transparent md:block lg:w-16"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-2 right-0 z-10 hidden w-12 bg-gradient-to-l from-void-black via-void-black/85 to-transparent md:block lg:w-16"
+        />
+      </div>
 
       {/* Pagination indicators */}
       <nav className="mt-4 flex items-center justify-center gap-2" aria-label="Navegación de integrantes">

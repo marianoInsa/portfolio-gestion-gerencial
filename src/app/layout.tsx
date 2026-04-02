@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Exo_2, Inter, JetBrains_Mono, Orbitron, Geist } from 'next/font/google';
-import CommandPalette from '@/components/layout/CommandPalette';
 import Footer from '@/components/layout/Footer';
 import NavBar from '@/components/layout/NavBar';
 import CyberneticGridShader from '@/components/ui/CyberneticGridShader';
@@ -77,7 +76,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <NavBar />
             <main id="main-content">{children}</main>
             <Footer />
-            <CommandPalette />
             <Toaster position="top-right" richColors />
           </TooltipProvider>
         </div>

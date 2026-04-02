@@ -51,18 +51,18 @@ export default function AvatarCard({ member }: AvatarCardProps) {
         <p className="text-sm leading-relaxed text-star-light">{member.bio}</p>
 
         {member.youtubeUrl && (
-          <div className="w-full overflow-hidden rounded-lg border border-electric-purple/30">
-            <iframe
-              width="100%"
-              height="200"
-              src={member.youtubeUrl}
-              title={`Video presentación ${member.firstName}`}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              loading="lazy"
-              className="block"
-            />
+          <div className="mx-auto w-full max-w-md overflow-hidden rounded-lg border border-electric-purple/30 lg:max-w-sm">
+            <div className="aspect-[4/5] w-full">
+              <iframe
+                src={member.youtubeUrl}
+                title={`Video presentación ${member.firstName}`}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+                className="h-full w-full"
+              />
+            </div>
           </div>
         )}
 

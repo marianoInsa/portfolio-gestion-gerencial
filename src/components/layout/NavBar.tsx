@@ -3,10 +3,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { Command, Menu } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { TEAM_NAME } from '@/data/team';
-import { Button } from '@/components/ui/button';
-import { Kbd } from '@/components/ui/kbd';
 import {
   Sheet,
   SheetContent,
@@ -15,7 +13,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 
 const navItems = [
@@ -27,10 +24,6 @@ const navItems = [
 export default function NavBar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-
-  const openCommandPalette = () => {
-    window.dispatchEvent(new Event('open-command-palette'));
-  };
 
   return (
     <nav
@@ -60,21 +53,6 @@ export default function NavBar() {
               </li>
             );
           })}
-          <li>
-            <Tooltip>
-              <TooltipTrigger
-                className="inline-flex h-8 items-center gap-2 rounded-lg border border-nebula bg-dark-matter/40 px-3 text-sm font-medium text-star-light hover:border-cyber-cyan hover:text-cyber-cyan"
-                onClick={openCommandPalette}
-              >
-                <Command />
-                Comandos
-                <Kbd>Ctrl+K</Kbd>
-              </TooltipTrigger>
-              <TooltipContent className="border border-nebula bg-deep-space text-white-photon">
-                Buscador rapido del portfolio
-              </TooltipContent>
-            </Tooltip>
-          </li>
         </ul>
 
         <Sheet open={open} onOpenChange={setOpen}>
@@ -108,19 +86,6 @@ export default function NavBar() {
                   </li>
                 );
               })}
-              <li className="pt-2">
-                <Button
-                  variant="outline"
-                  className="w-full border-nebula bg-dark-matter/40 text-star-light hover:border-cyber-cyan hover:text-cyber-cyan"
-                  onClick={() => {
-                    setOpen(false);
-                    openCommandPalette();
-                  }}
-                >
-                  <Command />
-                  Abrir comandos
-                </Button>
-              </li>
             </ul>
           </SheetContent>
         </Sheet>
