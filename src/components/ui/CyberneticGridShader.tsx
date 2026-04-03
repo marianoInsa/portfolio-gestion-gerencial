@@ -50,7 +50,7 @@ export default function CyberneticGridShader() {
 
     const scene = new THREE.Scene();
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    const clock = new THREE.Clock();
+    const timer = new THREE.Timer();
 
     const vertexShader = `
       void main() {
@@ -118,8 +118,14 @@ export default function CyberneticGridShader() {
     const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
 
-    const renderFrame = () => {
-      uniforms.iTime.value = clock.getElapsedTime();
+    const renderFrame = (timeMs?: number) => {
+      if (typeof timeMs === 'number') {
+        timer.update(timeMs);
+      } else {
+        timer.update();
+      }
+
+      uniforms.iTime.value = timer.getElapsed();
       renderer.render(scene, camera);
     };
 
@@ -183,7 +189,7 @@ export default function CyberneticGridShader() {
       const seconds = timeMs * 0.001;
       if (seconds - lastFrameTime >= frameInterval) {
         lastFrameTime = seconds;
-        renderFrame();
+        renderFrame(timeMs);
       }
 
       rafId = window.requestAnimationFrame(animate);
@@ -212,7 +218,7 @@ export default function CyberneticGridShader() {
     onResize();
 
     if (prefersReducedMotion) {
-      renderFrame();
+      renderFrame(performance.now());
     } else {
       rafId = window.requestAnimationFrame(animate);
     }

@@ -54,6 +54,8 @@
   --sidebar-accent-foreground: var(--color-white-photon);
   --sidebar-border: color-mix(in srgb, var(--color-nebula) 70%, transparent);
   --sidebar-ring: color-mix(in srgb, var(--color-cyber-cyan) 60%, transparent);
+  --coverflow-duration: 420ms;
+  --coverflow-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 @theme {

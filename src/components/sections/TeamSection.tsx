@@ -13,7 +13,8 @@ export default function TeamSection() {
               alt="Logo del equipo Stakeholders"
               width={92}
               height={92}
-              className="h-16 w-16 shrink-0 rounded-xl border border-cyber-cyan/40 object-cover sm:h-20 sm:w-20"
+              className="h-auto w-16 shrink-0 rounded-xl border border-cyber-cyan/40 object-contain sm:w-20"
+              style={{ height: 'auto' }}
             />
             <div className="min-w-0">
               <p className="font-mono text-xs uppercase tracking-[0.18em] text-cyber-cyan">Equipo</p>

@@ -18,6 +18,7 @@ export default function HeroSection() {
             width={180}
             height={180}
             className="h-auto w-[140px] md:w-[180px]"
+            style={{ height: 'auto' }}
             priority
           />
         </div>
