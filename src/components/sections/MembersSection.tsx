@@ -4,6 +4,7 @@ import type { CSSProperties } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { members } from '@/data/team';
+import { getCoverflowVisualState, getSignedLoopDistance } from './members-carousel-motion';
 import {
   AvatarCard,
   Carousel,
@@ -20,30 +21,16 @@ type CarouselApiWithClickAllowed = CarouselApi & {
   clickAllowed?: () => boolean;
 };
 
-function getSignedLoopDistance(index: number, selectedIndex: number, total: number): number {
-  if (total <= 1) return 0;
-
-  const direct = index - selectedIndex;
-  const wrapped = direct > 0 ? direct - total : direct + total;
-
-  return Math.abs(direct) <= Math.abs(wrapped) ? direct : wrapped;
-}
-
 function getCoverflowVars(distance: number): CSSProperties {
-  const magnitude = Math.min(Math.abs(distance), 2);
-  const direction = Math.sign(distance);
-
-  const translateX = `${direction * magnitude * 28}%`;
-  const rotateY = `${direction * magnitude * -11}deg`;
-  const scale = 1 - magnitude * 0.09;
-  const opacity = 1 - magnitude * 0.23;
-  const blur = magnitude > 0 ? Math.min(0.7 * magnitude, 1.1) : 0;
+  const visual = getCoverflowVisualState(distance);
+  const depth = Math.min(Math.abs(distance), 2) * -55;
 
   return {
-    zIndex: 30 - magnitude,
-    '--coverflow-transform': `translateX(${translateX}) rotateY(${rotateY}) scale(${scale})`,
-    '--coverflow-opacity': `${opacity}`,
-    '--coverflow-blur': `${blur}px`,
+    zIndex: visual.zIndex,
+    transform: `translateX(${visual.translateXPercent}%) translateZ(${depth}px) rotateY(${visual.rotateYDeg}deg) scale(${visual.scale})`,
+    opacity: visual.opacity,
+    filter: `blur(${visual.blurPx}px)`,
+    transformOrigin: 'center center',
   } as CSSProperties;
 }
 
@@ -127,7 +114,7 @@ export default function MembersSection() {
           setApi={setApi}
           aria-label="Carrusel de integrantes"
         >
-          <CarouselContent className="py-2 [perspective:1200px]">
+          <CarouselContent className="py-2 [perspective:1050px]">
             {members.map((member, index) => {
               const distance = getSignedLoopDistance(index, selectedIndex, members.length);
               const styleVars = getCoverflowVars(distance);
@@ -136,13 +123,13 @@ export default function MembersSection() {
               return (
                 <CarouselItem
                   key={member.id}
-                  className="relative pl-4 basis-[90%] md:basis-[74%] lg:basis-[58%] xl:basis-[50%]"
+                  className="relative pl-4 basis-[92%] md:basis-[72%] lg:basis-[58%] xl:basis-[52%]"
                 >
                   <div
                     style={styleVars}
                     className={cn(
-                      'h-full transform-gpu [transform-style:preserve-3d] [transform:var(--coverflow-transform)] [opacity:var(--coverflow-opacity)] [filter:blur(var(--coverflow-blur))]',
-                      '[transition-duration:var(--coverflow-duration)] [transition-property:transform,opacity,filter] [transition-timing-function:var(--coverflow-ease)]',
+                      'h-full [transform-style:preserve-3d] [backface-visibility:hidden]',
+                      '[transition-duration:520ms] [transition-property:transform,opacity,filter] [transition-timing-function:var(--coverflow-ease)]',
                       'will-change-transform motion-reduce:[transform:none] motion-reduce:[filter:none] motion-reduce:opacity-100',
                       isNeighbor && 'md:hover:brightness-110'
                     )}
@@ -188,15 +175,6 @@ export default function MembersSection() {
           <CarouselPrevious className="hidden md:flex" />
           <CarouselNext className="hidden md:flex" />
         </Carousel>
-
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-y-2 left-0 z-10 hidden w-12 bg-gradient-to-r from-void-black via-void-black/85 to-transparent md:block lg:w-16"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-y-2 right-0 z-10 hidden w-12 bg-gradient-to-l from-void-black via-void-black/85 to-transparent md:block lg:w-16"
-        />
       </div>
 
       {/* Pagination indicators */}

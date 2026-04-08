@@ -29,7 +29,14 @@ pnpm-debug.log*
 .agents/
 .superpowers/
 .cursor/
+.claude/
+.windsurf/
 .github/prompts/
 docs/superpowers/
 .vscode/mcp.json
 skills-lock.json
+
+# local tests
+tests/
+test-results/
+test-output.txt

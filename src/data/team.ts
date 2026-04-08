@@ -11,7 +11,7 @@ export const COURSE_YEAR = '2026';
 export const members: Member[] = [
   {
     id: 'acosta-sandra',
-    fullName: 'Acosta, Sandra',
+    fullName: 'Sandra Acosta',
     firstName: 'Sandra',
     avatarPath: '/assets/avatars/acosta-sandra.svg',
     youtubeUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
@@ -22,7 +22,7 @@ export const members: Member[] = [
   },
   {
     id: 'fernandez-matias',
-    fullName: 'Fernandez, Matias',
+    fullName: 'Matias Fernandez',
     firstName: 'Matias',
     avatarPath: '/assets/avatars/fernandez-matias.webp',
     youtubeUrl: 'https://www.youtube.com/embed/cGpz-EEMgi0',
@@ -33,7 +33,7 @@ export const members: Member[] = [
   },
   {
     id: 'insaurralde-mariano',
-    fullName: 'Insaurralde, Mariano',
+    fullName: 'Mariano Insaurralde',
     firstName: 'Mariano',
     avatarPath: '/assets/avatars/insaurralde-mariano.webp',
     youtubeUrl: 'https://www.youtube.com/embed/4peMlCcX01E',
@@ -44,8 +44,8 @@ export const members: Member[] = [
   },
   {
     id: 'philippe-maurel',
-    fullName: 'Philippe, Maurel',
-    firstName: 'Maurel',
+    fullName: 'Philippe Maurel',
+    firstName: 'Philippe',
     avatarPath: '/assets/avatars/philippe-maurel.webp',
     youtubeUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     roles: ['Disenador', 'Desarrollador'],
@@ -55,7 +55,7 @@ export const members: Member[] = [
   },
   {
     id: 'sanchez-franco',
-    fullName: 'Sanchez, Franco',
+    fullName: 'Franco Sanchez',
     firstName: 'Franco',
     avatarPath: '/assets/avatars/sanchez-franco.webp',
     youtubeUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
