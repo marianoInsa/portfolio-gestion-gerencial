@@ -11,7 +11,11 @@ export default function TpiPage() {
   return (
     <main>
       <SectionWrapper className="pt-16">
-        <GlitchTitle text="Trabajo Practico Integrador" as="h1" className="text-4xl md:text-6xl" />
+        <GlitchTitle
+          text="Trabajo Practico Integrador"
+          as="h1"
+          className="text-[clamp(2rem,10vw,3rem)] md:text-6xl"
+        />
       </SectionWrapper>
 
       <SectionWrapper>

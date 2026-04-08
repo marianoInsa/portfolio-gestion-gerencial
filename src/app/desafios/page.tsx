@@ -14,7 +14,7 @@ export default function DesafiosPage() {
   return (
     <main>
       <SectionWrapper className="pt-16">
-        <GlitchTitle text="DESAFIOS" as="h1" className="text-5xl md:text-6xl" />
+        <GlitchTitle text="DESAFIOS" as="h1" className="text-[clamp(2.15rem,11vw,3.2rem)] md:text-6xl" />
         <p className="mt-4 max-w-2xl text-star-light">
           Registro cronologico de desafios, decisiones, evidencias y aprendizajes del equipo.
         </p>
@@ -46,7 +46,10 @@ export default function DesafiosPage() {
                   ))}
                 </div>
 
-                <Link href={`/desafios/${challenge.id}`} className="mt-3 inline-flex text-sm font-semibold text-cyber-cyan">
+                <Link
+                  href={`/desafios/${challenge.id}`}
+                  className="mt-3 inline-flex min-h-11 items-center rounded-md px-2 text-sm font-semibold text-cyber-cyan"
+                >
                   Ver detalle
                 </Link>
               </article>

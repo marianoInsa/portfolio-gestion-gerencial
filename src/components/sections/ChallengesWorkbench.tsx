@@ -209,8 +209,53 @@ export default function ChallengesWorkbench({ challenges }: ChallengesWorkbenchP
 
             <div className="space-y-4 p-4 md:hidden">
               <h3 className="font-exo2 text-xl font-semibold text-white-photon">{activeChallenge.title}</h3>
+              <p className="text-xs uppercase tracking-wide text-neon-green">{activeChallenge.period}</p>
               <p className="text-sm text-star-light">{activeChallenge.problem}</p>
               <p className="text-sm text-star-light">{activeChallenge.solution}</p>
+
+              <div className="flex flex-wrap gap-2">
+                {activeChallenge.tags.map((tag) => (
+                  <Badge key={tag} color="purple" className="normal-case tracking-normal">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+
+              <div className="rounded-lg border border-nebula/70 bg-dark-matter/45 p-3">
+                <p className="mb-2 flex items-center gap-2 text-sm font-semibold text-neon-green">
+                  <Wrench className="size-4" />
+                  Herramientas
+                </p>
+                <ul className="space-y-1">
+                  {activeChallenge.tools.slice(0, 6).map((tool) => (
+                    <li key={tool} className="text-sm text-star-light">
+                      • {tool}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="rounded-lg border border-nebula/70 bg-dark-matter/45 p-3">
+                <p className="mb-2 flex items-center gap-2 text-sm font-semibold text-cyber-cyan">
+                  <BookOpenText className="size-4" />
+                  Evidencias ({activeChallenge.evidences.length})
+                </p>
+                <ul className="space-y-2">
+                  {activeChallenge.evidences.slice(0, 4).map((evidence) => (
+                    <li key={evidence.label} className="text-sm text-star-light">
+                      • {evidence.label}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="rounded-lg border border-nebula/70 bg-dark-matter/45 p-3">
+                <p className="mb-2 flex items-center gap-2 text-sm font-semibold text-hot-pink">
+                  <FolderOpenDot className="size-4" />
+                  Reflexión
+                </p>
+                <p className="text-sm leading-relaxed text-star-light">{activeChallenge.teamReflection}</p>
+              </div>
             </div>
           </SidebarInset>
         </div>

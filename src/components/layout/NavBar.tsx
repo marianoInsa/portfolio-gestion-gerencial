@@ -31,7 +31,7 @@ export default function NavBar() {
       className="sticky top-0 z-50 border-b border-nebula/70 bg-void-black/80 backdrop-blur-md"
     >
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 md:px-8">
-        <Link href="/" className="font-orbitron text-lg font-black tracking-wider text-cyber-cyan">
+        <Link href="/" className="inline-flex min-h-11 items-center font-orbitron text-lg font-black tracking-wider text-cyber-cyan">
           {TEAM_NAME}
         </Link>
 
@@ -43,7 +43,7 @@ export default function NavBar() {
                 <Link
                   href={item.href}
                   className={cn(
-                    'relative py-2 text-sm font-semibold uppercase tracking-wide text-star-light transition-colors hover:text-cyber-cyan',
+                    'relative inline-flex min-h-11 min-w-11 items-center justify-center px-2 py-2 text-sm font-semibold uppercase tracking-wide text-star-light transition-colors hover:text-cyber-cyan',
                     isActive && 'text-cyber-cyan'
                   )}
                 >
@@ -57,7 +57,7 @@ export default function NavBar() {
 
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger
-            className="inline-flex size-8 items-center justify-center rounded-lg border border-nebula bg-dark-matter/40 text-white-photon hover:border-cyber-cyan hover:text-cyber-cyan md:hidden"
+            className="inline-flex size-11 items-center justify-center rounded-lg border border-nebula bg-dark-matter/40 text-white-photon hover:border-cyber-cyan hover:text-cyber-cyan md:hidden"
             aria-label="Abrir menu"
           >
             <Menu size={18} />
@@ -77,7 +77,7 @@ export default function NavBar() {
                       href={item.href}
                       onClick={() => setOpen(false)}
                       className={cn(
-                        'block rounded-md border border-transparent px-3 py-2 text-sm font-semibold uppercase tracking-wide text-star-light transition-colors hover:border-nebula hover:bg-dark-matter/50 hover:text-cyber-cyan',
+                        'flex min-h-11 items-center rounded-md border border-transparent px-3 py-2.5 text-sm font-semibold uppercase tracking-wide text-star-light transition-colors hover:border-nebula hover:bg-dark-matter/50 hover:text-cyber-cyan',
                         isActive && 'border-nebula bg-dark-matter/60 text-cyber-cyan'
                       )}
                     >

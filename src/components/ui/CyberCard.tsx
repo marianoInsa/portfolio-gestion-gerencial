@@ -25,7 +25,7 @@ export default function CyberCard({
   return (
     <article
       className={cn(
-        'rounded-2xl border border-nebula bg-deep-space/80 p-6 backdrop-blur-sm transition-all duration-300',
+        'rounded-2xl border border-nebula bg-deep-space/80 p-4 sm:p-6 backdrop-blur-sm transition-all duration-300',
         glowMap[glowColor],
         className
       )}

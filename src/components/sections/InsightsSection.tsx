@@ -88,7 +88,7 @@ export default function InsightsSection() {
         </div>
 
         <Popover>
-          <PopoverTrigger className="inline-flex size-10 items-center justify-center rounded-lg border border-nebula bg-dark-matter/50 text-star-light hover:border-cyber-cyan hover:text-cyber-cyan">
+          <PopoverTrigger className="inline-flex size-11 shrink-0 items-center justify-center rounded-lg border border-nebula bg-dark-matter/50 text-star-light hover:border-cyber-cyan hover:text-cyber-cyan">
             <CircleHelp />
           </PopoverTrigger>
           <PopoverContent className="border border-nebula bg-deep-space text-white-photon">

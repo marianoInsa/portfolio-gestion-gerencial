@@ -123,7 +123,7 @@ export default function MembersSection() {
               return (
                 <CarouselItem
                   key={member.id}
-                  className="relative pl-4 basis-[92%] md:basis-[72%] lg:basis-[58%] xl:basis-[52%]"
+                  className="relative pl-17 basis-[92%] md:basis-[72%] lg:basis-[58%] xl:basis-[52%]"
                 >
                   <div
                     style={styleVars}

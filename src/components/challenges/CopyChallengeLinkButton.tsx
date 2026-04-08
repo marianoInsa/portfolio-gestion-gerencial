@@ -27,7 +27,7 @@ export default function CopyChallengeLinkButton({ slug }: CopyChallengeLinkButto
   return (
     <Tooltip>
       <TooltipTrigger
-        className="inline-flex items-center gap-2 rounded-lg border border-nebula bg-dark-matter/50 px-3 py-2 text-sm font-medium text-star-light hover:bg-nebula/40 hover:text-cyber-cyan"
+        className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-nebula bg-dark-matter/50 px-3 py-2 text-sm font-medium text-star-light hover:bg-nebula/40 hover:text-cyber-cyan"
         onClick={handleCopy}
       >
           {copied ? <Check /> : <Link2 />}

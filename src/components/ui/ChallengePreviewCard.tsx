@@ -26,7 +26,7 @@ export default function ChallengePreviewCard({ challenge }: ChallengePreviewCard
         <span className="font-mono text-sm text-neon-green">#{String(challenge.number).padStart(2, '0')}</span>
         <Link
           href={`/desafios/${challenge.id}`}
-          className="text-sm font-semibold text-cyber-cyan transition-colors hover:text-white-photon"
+          className="inline-flex min-h-11 items-center rounded-md px-2 text-sm font-semibold text-cyber-cyan transition-colors hover:text-white-photon"
         >
           Ver detalle
         </Link>

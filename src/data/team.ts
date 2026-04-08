@@ -13,7 +13,7 @@ export const members: Member[] = [
     id: 'acosta-sandra',
     fullName: 'Sandra Acosta',
     firstName: 'Sandra',
-    avatarPath: '/assets/avatars/acosta-sandra.svg',
+    avatarPath: '/assets/avatars/acosta-sandra.webp',
     youtubeUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
     roles: ['Tester', 'Analista'],
     strengths: ['Validacion funcional', 'Detalle', 'Mejora de procesos'],

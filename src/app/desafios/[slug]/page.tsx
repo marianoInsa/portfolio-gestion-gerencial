@@ -180,7 +180,7 @@ export default async function ChallengeDetailPage({ params }: ChallengeDetailPag
                         </Button>
 
                         <Dialog>
-                          <DialogTrigger className="inline-flex h-8 items-center rounded-lg bg-electric-purple/80 px-3 text-sm font-medium text-white-photon hover:bg-electric-purple">
+                          <DialogTrigger className="inline-flex min-h-11 items-center rounded-lg bg-electric-purple/80 px-3 text-sm font-medium text-white-photon hover:bg-electric-purple">
                             Vista rapida
                           </DialogTrigger>
                           <DialogContent className="max-w-2xl border border-nebula bg-deep-space text-white-photon">

@@ -18,7 +18,7 @@ export default function TeamSection() {
             />
             <div className="min-w-0">
               <p className="font-mono text-xs uppercase tracking-[0.18em] text-cyber-cyan">Equipo</p>
-              <h2 className="font-orbitron text-2xl font-black uppercase leading-tight text-white-photon sm:text-3xl md:text-4xl [overflow-wrap:anywhere]">
+              <h2 className="font-orbitron text-2xl font-black uppercase leading-tight text-white-photon sm:text-3xl md:text-2xl [overflow-wrap:anywhere]">
                 {TEAM_NAME}
               </h2>
             </div>
