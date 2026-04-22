@@ -40,5 +40,6 @@ skills-lock.json
 tests/
 test-results/
 test-output.txt
+.playwright-mcp/
 playwright.config.ts
 .tmp*

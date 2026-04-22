@@ -10,11 +10,14 @@ export interface Member {
   fullName: string;
   firstName: string;
   avatarPath: string;
-  youtubeUrl: string;
+  cartoonPath: string;
   roles: MemberRole[];
   strengths: string[];
   interests: string[];
   bio: string;
+  leaderType: string;
+  leaderLabels: string[];
+  leaderDescription: string;
 }
 
 export interface Evidence {

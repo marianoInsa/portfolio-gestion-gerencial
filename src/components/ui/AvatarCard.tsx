@@ -25,6 +25,7 @@ function initials(fullName: string): string {
 
 export default function AvatarCard({ member }: AvatarCardProps) {
   const [hasImageError, setHasImageError] = useState(false);
+  const [hasCartoonError, setHasCartoonError] = useState(false);
 
   return (
     <CyberCard glowColor="cyan" className="group h-full">
@@ -49,22 +50,6 @@ export default function AvatarCard({ member }: AvatarCardProps) {
 
         <h3 className="font-exo2 text-xl font-bold text-white-photon">{member.fullName}</h3>
         <p className="text-sm leading-relaxed text-star-light">{member.bio}</p>
-
-        {member.youtubeUrl && (
-          <div className="mx-auto w-full max-w-md overflow-hidden rounded-lg border border-electric-purple/30 lg:max-w-sm">
-            <div className="aspect-[4/5] w-full">
-              <iframe
-                src={member.youtubeUrl}
-                title={`Video presentación ${member.firstName}`}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                loading="lazy"
-                className="h-full w-full"
-              />
-            </div>
-          </div>
-        )}
 
         <div className="flex flex-wrap justify-center gap-2">
           {member.roles.map((role) => (
@@ -95,6 +80,39 @@ export default function AvatarCard({ member }: AvatarCardProps) {
                 </Badge>
               ))}
             </div>
+          </div>
+
+          <div data-testid={`leader-section-${member.id}`}>
+            <p className="font-mono text-xs uppercase tracking-wide text-electric-purple">Como lider...</p>
+            {/* <p className="mt-1 text-sm text-star-light">{member.leaderType}</p> */}
+
+            <div className="relative mx-auto mt-3 aspect-square w-full max-w-[420px] overflow-hidden rounded-xl border border-electric-purple/40 bg-dark-matter/70">
+              {hasCartoonError ? (
+                <div className="absolute inset-0 flex items-center justify-center bg-dark-matter font-orbitron text-xl text-cyber-cyan">
+                  {initials(member.fullName)}
+                </div>
+              ) : (
+                <Image
+                  src={member.cartoonPath}
+                  alt={`Caricatura de ${member.firstName}`}
+                  fill
+                  sizes="(max-width: 768px) 70vw, 420px"
+                  loading="lazy"
+                  className="object-cover object-center"
+                  onError={() => setHasCartoonError(true)}
+                />
+              )}
+            </div>
+
+            <div className="mt-3 flex flex-wrap gap-2">
+              {member.leaderLabels.slice(0, 3).map((label) => (
+                <Badge key={label} color="cyan" className="normal-case tracking-normal">
+                  {label}
+                </Badge>
+              ))}
+            </div>
+
+            <p className="mt-3 text-sm leading-relaxed text-star-light">{member.leaderDescription}</p>
           </div>
         </div>
       </div>
