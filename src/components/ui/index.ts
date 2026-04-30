@@ -6,6 +6,7 @@ export { default as EmptyState } from './EmptyState';
 export { default as GlitchTitle } from './GlitchTitle';
 export { default as GridBackground } from './GridBackground';
 export { default as NeonButton } from './NeonButton';
+export { default as ZoomableImage } from './ZoomableImage';
 export {
 	Carousel,
 	CarouselContent,

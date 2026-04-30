@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import CopyChallengeLinkButton from '@/components/challenges/CopyChallengeLinkButton';
 import { challenges } from '@/data/challenges';
-import { Badge, SectionWrapper } from '@/components/ui';
+import { Badge, SectionWrapper, ZoomableImage } from '@/components/ui';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import {
   Breadcrumb,
@@ -165,6 +165,12 @@ export default async function ChallengeDetailPage({ params }: ChallengeDetailPag
                             allowFullScreen
                           />
                         </div>
+                      ) : evidence.type === 'imagen' ? (
+                        <div className="rounded-lg border border-nebula/50 bg-dark-matter/30 p-4">
+                          <p className="text-sm text-star-light">
+                            Haz click en <span className="text-cyber-cyan font-semibold">&quot;Abrir evidencia&quot;</span> para descargar la imagen, o en <span className="text-electric-purple font-semibold">&quot;Vista rápida&quot;</span> para verla en un modal.
+                          </p>
+                        </div>
                       ) : (
                         <p>Esta evidencia se abre en una pestana externa.</p>
                       )}
@@ -201,6 +207,12 @@ export default async function ChallengeDetailPage({ params }: ChallengeDetailPag
                                   allowFullScreen
                                 />
                               </div>
+                            ) : evidence.type === 'imagen' ? (
+                              <ZoomableImage
+                                src={evidence.url}
+                                alt={evidence.label}
+                                className="h-auto w-full object-contain"
+                              />
                             ) : (
                               <p className="text-star-light">
                                 Esta evidencia no tiene embed directo disponible. Usa el boton &quot;Abrir evidencia&quot; para verla completa.

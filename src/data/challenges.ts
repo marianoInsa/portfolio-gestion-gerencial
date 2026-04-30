@@ -79,4 +79,30 @@ export const challenges: Challenge[] = [
     ],
     tags: ['portfolio', 'frontend', 'integracion'],
   },
+  {
+    id: 'desafio-04-punto-de-equilibrio',
+    title: 'Punto de Equilibrio',
+    number: 4,
+    period: 'Hasta 08/05/2026 22:45 hs',
+    problem:
+      'Analizar y calcular el punto de equilibrio en diferentes escenarios empresariales, resolviendo 4 ejercicios progresivos que integran costos fijos, variables, precio unitario y graficos de equilibrio para toma de decisiones financieras.',
+    solution:
+      'Se resolvieron 4 ejercicios aplicando formulas de punto de equilibrio: (1) tabla completa con ventas, costos y PE de empresa manufacturera, (2) calculo PE en unidades y pesos, (3) analisis de costos variables y fijos para empresa de servicios, (4) impacto de cambios en precios y costos sobre el punto de equilibrio con 3 escenarios.',
+    teamReflection:
+      'Comprendimos como variaciones en costos fijos, precio unitario y costos variables impactan directamente el punto de equilibrio, herramienta critica para planificacion financiera y escenarios empresariales.',
+    tools: ['Google Sheets', 'Excel', 'Analisis Financiero'],
+    evidences: [
+      {
+        type: 'imagen',
+        label: 'Infografia del Punto de Equilibrio',
+        url: '/assets/challenges/desafio-4/desafío4-infografía.webp',
+      },
+      {
+        type: 'enlace',
+        label: 'Planilla de Calculos - Google Sheets',
+        url: 'https://docs.google.com/spreadsheets/d/1vBrP1Qsxt0vBPT-QwLlZXgslByJCdBh7hq8ZnXdCg3s/edit?usp=sharing',
+      },
+    ],
+    tags: ['financiero', 'punto-de-equilibrio', 'costos', 'analisis'],
+  },
 ];
