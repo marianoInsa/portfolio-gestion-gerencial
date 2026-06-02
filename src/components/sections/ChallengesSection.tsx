@@ -1,5 +1,16 @@
 import { challenges } from '@/data/challenges';
-import { ChallengePreviewCard, EmptyState, GlitchTitle, NeonButton, SectionWrapper } from '@/components/ui';
+import { 
+  ChallengePreviewCard, 
+  EmptyState, 
+  GlitchTitle, 
+  NeonButton, 
+  SectionWrapper,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious
+} from '@/components/ui';
 
 export default function ChallengesSection() {
   return (
@@ -20,10 +31,26 @@ export default function ChallengesSection() {
           message="Los desafios se iran publicando a medida que avance la cursada."
         />
       ) : (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {challenges.slice(0, 3).map((challenge) => (
-            <ChallengePreviewCard key={challenge.id} challenge={challenge} />
-          ))}
+        <div className="px-12">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent>
+              {challenges.map((challenge) => (
+                <CarouselItem key={challenge.id} className="md:basis-1/2 lg:basis-1/3">
+                  <div className="p-1 h-full">
+                    <ChallengePreviewCard challenge={challenge} />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden md:flex" />
+            <CarouselNext className="hidden md:flex" />
+          </Carousel>
         </div>
       )}
     </SectionWrapper>

@@ -15,7 +15,7 @@ export interface Member {
   strengths: string[];
   interests: string[];
   bio: string;
-  leaderType: string;
+  // leaderType: string;
   leaderLabels: string[];
   leaderDescription: string;
 }
@@ -33,6 +33,7 @@ export interface Challenge {
   period: string;
   problem: string;
   solution: string;
+  solutionHtml?: string;
   teamReflection: string;
   tools: string[];
   evidences: Evidence[];

@@ -17,10 +17,10 @@ export const members: Member[] = [
     strengths: ['Validacion funcional', 'Detalle', 'Mejora de procesos'],
     interests: ['Calidad de software', 'Analisis', 'Gestion del conocimiento'],
     bio: 'Asegura coherencia funcional y usabilidad, transformando feedback en mejoras concretas.',
-    leaderType: 'Lider democrático, integrador y de servicio',
+    // leaderType: 'Un líder inspirador que persigue grandes metas a futuro integrando activamente las ideas y el bienestar de su grupo.',
     leaderLabels: ['De Equipo', 'Democrático', 'Visionario'],
     leaderDescription:
-      'Facilita acuerdos participativos, conecta perspectivas del equipo y prioriza el crecimiento de otras personas para elevar la calidad colectiva.',
+      'Un líder inspirador que persigue grandes metas a futuro integrando activamente las ideas y el bienestar de su grupo.',
   },
   {
     id: 'fernandez-matias',
@@ -32,10 +32,10 @@ export const members: Member[] = [
     strengths: ['Planificacion', 'Comunicacion', 'Analisis funcional'],
     interests: ['Gestion de proyectos', 'IA aplicada', 'Arquitectura de software'],
     bio: 'Coordina el equipo con foco en entregas claras, decisiones trazables y mejora continua.',
-    leaderType: 'Lider directivo con estilo autoritario y distancia operativa',
+    // leaderType: 'Un supervisor distante e inflexible que impone reglas estrictas desde lejos y exige obediencia sin involucrarse en el día a día.',
     leaderLabels: ['Ajeno', 'Directivo', 'Autoritario'],
     leaderDescription:
-      'Define lineamientos de forma centralizada, exige cumplimiento de objetivos y mantiene una conducción enfocada en control y resultados.',
+      'Un supervisor distante e inflexible que impone reglas estrictas desde lejos y exige obediencia sin involucrarse en el día a día.',
   },
   {
     id: 'insaurralde-mariano',
@@ -47,10 +47,10 @@ export const members: Member[] = [
     strengths: ['Resolucion de problemas', 'Calidad tecnica', 'Testing'],
     interests: ['Ingeniería de software', 'Automatizacion', 'IA generativa'],
     bio: 'Impulsa implementaciones robustas y mantenibles, validando cada entrega con criterio de calidad.',
-    leaderType: 'Lider de equipo democrático y de servicio',
+    // leaderType: 'Lider de equipo y democrático',
     leaderLabels: ['De Equipo', 'Democrático'],
     leaderDescription:
-      'Construye cohesion grupal, promueve decisiones compartidas y acompaña al equipo removiendo bloqueos para sostener la mejora continua.',
+      'Un facilitador cercano y empático que asegura la armonía del grupo tomando las decisiones siempre mediante el consenso.',
   },
   {
     id: 'philippe-maurel',
@@ -62,10 +62,10 @@ export const members: Member[] = [
     strengths: ['UX UI', 'Prototipado', 'Accesibilidad'],
     interests: ['Diseno de interfaces', 'Frontend', 'Experiencia de usuario'],
     bio: 'Diseña experiencias intuitivas y consistentes, alineando identidad visual con objetivos del equipo.',
-    leaderType: 'Lider democrático con participacion selectiva',
+    // leaderType: 'Lider democrático con participacion selectiva',
     leaderLabels: ['Ajeno', 'Democrático'],
     leaderDescription:
-      'Impulsa consensos cuando interviene en decisiones clave, aunque mantiene una presencia acotada en la dinámica operativa diaria.',
+      'Un guía desprendido que prefiere dar un paso al costado para que el equipo debata, vote y decida con total autonomía.',
   },
   {
     id: 'sanchez-franco',
@@ -77,9 +77,9 @@ export const members: Member[] = [
     strengths: ['Modelado de datos', 'Documentacion', 'Pensamiento sistemico'],
     interests: ['Data analytics', 'Product thinking', 'Sistemas distribuidos'],
     bio: 'Conecta requerimientos funcionales con soluciones tecnicas para generar valor medible.',
-    leaderType: 'Lider desarrollador, democrático e integrador',
+    // leaderType: 'Lider desarrollador, democrático e integrador',
     leaderLabels: ['De Equipo', 'Democrático', 'Visionario'],
     leaderDescription:
-      'Lidera desde la ejecucion técnica, fomenta decisiones participativas y articula al equipo para traducir estrategia en implementaciones concretas.',
+      'Un líder inspirador que persigue grandes metas a futuro integrando activamente las ideas y el bienestar de su grupo.',
   },
 ];

@@ -2,6 +2,10 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import CopyChallengeLinkButton from '@/components/challenges/CopyChallengeLinkButton';
+import Challenge5Leaders from '@/components/challenges/Challenge5Leaders';
+import Challenge6Cambio from '@/components/challenges/Challenge6Cambio';
+import Challenge7CausaEfecto from '@/components/challenges/Challenge7CausaEfecto';
+import Challenge7Problem from '@/components/challenges/Challenge7Problem';
 import { challenges } from '@/data/challenges';
 import { Badge, SectionWrapper, ZoomableImage } from '@/components/ui';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -133,11 +137,15 @@ export default async function ChallengeDetailPage({ params }: ChallengeDetailPag
               <section>
                 <h2 className="font-exo2 text-2xl font-semibold text-cyber-cyan">Problema Abordado</h2>
                 <p className="mt-3 leading-relaxed text-star-light">{challenge.problem}</p>
+                {challenge.id === 'desafio-07-causa-efecto' && <Challenge7Problem />}
               </section>
 
               <section>
                 <h2 className="font-exo2 text-2xl font-semibold text-electric-purple">Solucion Propuesta</h2>
                 <p className="mt-3 leading-relaxed text-star-light">{challenge.solution}</p>
+                {challenge.id === 'desafio-05-perfil-talento' && <Challenge5Leaders />}
+                {challenge.id === 'desafio-06-gestion-del-cambio' && <Challenge6Cambio />}
+                {challenge.id === 'desafio-07-causa-efecto' && <Challenge7CausaEfecto />}
               </section>
             </TabsContent>
 
