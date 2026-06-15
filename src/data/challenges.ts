@@ -152,4 +152,16 @@ export const challenges: Challenge[] = [
     ],
     tags: ['ishikawa', 'causa-efecto', '6m', 'resolucion-de-problemas'],
   },
+  {
+    id: 'desafio-08-visita-experto',
+    title: 'Visita de Experto',
+    number: 8,
+    period: '15/06/2026',
+    problem: 'Preparar una investigación previa sobre la organización Devlights y eventualmente el perfil del Ing. Nicolás Dogi (CCO) para elaborar preguntas grupales, y posteriormente realizar un análisis de la empresa como sistema sociotécnico, su sistema de información desde la perspectiva de negocios, particularidades, FCE, problemáticas, propuestas y una síntesis final.',
+    solution: 'Se completó la investigación y el análisis de la organización, modelando a Devlights como un sistema sociotécnico estructurado (subsistemas social y técnico), analizando su cadena de valor B2B en dólares bajo metodologías ágiles (SCRUM), identificando FCE (Nearshoring, arbitraje salarial y Bootcamps), y proponiendo la adopción de políticas VDP para mitigar riesgos de seguridad.',
+    teamReflection: 'Comprendimos cómo funciona operacional y comercialmente una empresa de desarrollo orientada a mercados extranjeros. Vimos la interconexión entre la cultura organizacional (capacitación interna) y el subsistema técnico (AWS, SCRUM) como base de su rentabilidad y adaptabilidad.',
+    tools: ['Sistemas Sociotécnicos', 'Metodologías Ágiles', 'Gestión del Cambio', 'Políticas VDP'],
+    evidences: [],
+    tags: ['visita-experto', 'sistemas-sociotecnicos', 'negocios', 'cambio', 'seguridad'],
+  },
 ];

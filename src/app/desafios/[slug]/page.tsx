@@ -6,6 +6,7 @@ import Challenge5Leaders from '@/components/challenges/Challenge5Leaders';
 import Challenge6Cambio from '@/components/challenges/Challenge6Cambio';
 import Challenge7CausaEfecto from '@/components/challenges/Challenge7CausaEfecto';
 import Challenge7Problem from '@/components/challenges/Challenge7Problem';
+import Challenge8VisitaExperto from '@/components/challenges/Challenge8VisitaExperto';
 import { challenges } from '@/data/challenges';
 import { Badge, SectionWrapper, ZoomableImage } from '@/components/ui';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -146,6 +147,7 @@ export default async function ChallengeDetailPage({ params }: ChallengeDetailPag
                 {challenge.id === 'desafio-05-perfil-talento' && <Challenge5Leaders />}
                 {challenge.id === 'desafio-06-gestion-del-cambio' && <Challenge6Cambio />}
                 {challenge.id === 'desafio-07-causa-efecto' && <Challenge7CausaEfecto />}
+                {challenge.id === 'desafio-08-visita-experto' && <Challenge8VisitaExperto />}
               </section>
             </TabsContent>
 
