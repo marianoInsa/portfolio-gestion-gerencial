@@ -48,6 +48,18 @@ export interface RPAEntry {
   description?: string;
 }
 
+export interface TPISection {
+  id: string;
+  number: number;
+  title: string;
+  content: string[];
+  highlights?: string[];
+  subsections?: {
+    title: string;
+    items: string[] | { label: string; text: string }[];
+  }[];
+}
+
 export interface TPIProject {
   title: string;
   description: string;
@@ -56,4 +68,8 @@ export interface TPIProject {
   evidences: Evidence[];
   reflections: string;
   isPublished: boolean;
+  sections?: TPISection[];
+  closingQuote?: string;
+  infographicPath?: string;
 }
+

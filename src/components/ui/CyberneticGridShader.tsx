@@ -62,7 +62,6 @@ export default function CyberneticGridShader() {
       precision highp float;
       uniform vec2 iResolution;
       uniform float iTime;
-      uniform vec2 iMouse;
 
       float random(vec2 st) {
         return fract(sin(dot(st.xy, vec2(12.9898, 78.233)))
@@ -71,14 +70,8 @@ export default function CyberneticGridShader() {
 
       void main() {
         vec2 uv = (gl_FragCoord.xy - 0.5 * iResolution.xy) / iResolution.y;
-        vec2 mouse = (iMouse - 0.5 * iResolution.xy) / iResolution.y;
 
         float t = iTime * 0.2;
-        float mouseDist = length(uv - mouse);
-
-        float warp = sin(mouseDist * 20.0 - t * 4.0) * 0.1;
-        warp *= smoothstep(0.4, 0.0, mouseDist);
-        uv += warp;
 
         vec2 gridUv = abs(fract(uv * 10.0) - 0.5);
         float line = pow(1.0 - min(gridUv.x, gridUv.y), 50.0);
@@ -90,9 +83,6 @@ export default function CyberneticGridShader() {
         energy = smoothstep(0.8, 1.0, energy);
         color += vec3(1.0, 0.2, 0.8) * energy * line;
 
-        float glow = smoothstep(0.1, 0.0, mouseDist);
-        color += vec3(1.0) * glow * 0.5;
-
         color += random(uv + t * 0.1) * 0.05;
 
         gl_FragColor = vec4(color, 1.0);
@@ -102,9 +92,6 @@ export default function CyberneticGridShader() {
     const uniforms = {
       iTime: { value: 0 },
       iResolution: { value: new THREE.Vector2() },
-      iMouse: {
-        value: new THREE.Vector2(0, 0),
-      },
     };
 
     const material = new THREE.ShaderMaterial({
@@ -129,52 +116,12 @@ export default function CyberneticGridShader() {
       renderer.render(scene, camera);
     };
 
-    let hasReceivedPointerInput = false;
-
-    const updateMouse = (clientX: number, clientY: number) => {
-      const rect = container.getBoundingClientRect();
-      const localX = THREE.MathUtils.clamp(clientX - rect.left, 0, rect.width);
-      const localY = THREE.MathUtils.clamp(clientY - rect.top, 0, rect.height);
-      uniforms.iMouse.value.set(localX, rect.height - localY);
-      hasReceivedPointerInput = true;
-    };
-
     const onResize = () => {
       const rect = container.getBoundingClientRect();
       const width = Math.max(1, Math.floor(rect.width));
       const height = Math.max(1, Math.floor(rect.height));
       renderer.setSize(width, height, false);
       uniforms.iResolution.value.set(width, height);
-
-      if (!hasReceivedPointerInput) {
-        uniforms.iMouse.value.set(width * 0.5, height * 0.5);
-      }
-    };
-
-    const onPointerMove = (event: PointerEvent) => {
-      updateMouse(event.clientX, event.clientY);
-    };
-
-    const onPointerDown = (event: PointerEvent) => {
-      updateMouse(event.clientX, event.clientY);
-    };
-
-    const onTouchStart = (event: TouchEvent) => {
-      const touch = event.touches[0] ?? event.changedTouches[0];
-      if (!touch) {
-        return;
-      }
-
-      updateMouse(touch.clientX, touch.clientY);
-    };
-
-    const onTouchMove = (event: TouchEvent) => {
-      const touch = event.touches[0] ?? event.changedTouches[0];
-      if (!touch) {
-        return;
-      }
-
-      updateMouse(touch.clientX, touch.clientY);
     };
 
     let rafId = 0;
@@ -209,10 +156,6 @@ export default function CyberneticGridShader() {
     resizeObserver.observe(container);
 
     window.addEventListener('resize', onResize);
-    window.addEventListener('pointermove', onPointerMove, { passive: true });
-    window.addEventListener('pointerdown', onPointerDown, { passive: true });
-    window.addEventListener('touchstart', onTouchStart, { passive: true });
-    window.addEventListener('touchmove', onTouchMove, { passive: true });
     document.addEventListener('visibilitychange', onVisibilityChange);
 
     onResize();
@@ -228,10 +171,6 @@ export default function CyberneticGridShader() {
       window.cancelAnimationFrame(rafId);
       resizeObserver.disconnect();
       window.removeEventListener('resize', onResize);
-      window.removeEventListener('pointermove', onPointerMove);
-      window.removeEventListener('pointerdown', onPointerDown);
-      window.removeEventListener('touchstart', onTouchStart);
-      window.removeEventListener('touchmove', onTouchMove);
       document.removeEventListener('visibilitychange', onVisibilityChange);
 
       const canvas = renderer.domElement;

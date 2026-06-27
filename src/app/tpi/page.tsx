@@ -1,39 +1,78 @@
 import type { Metadata } from 'next';
 import { tpi } from '@/data/tpi';
-import { GlitchTitle, SectionWrapper } from '@/components/ui';
+import { SectionWrapper } from '@/components/ui';
+import TPIHero from '@/components/tpi/TPIHero';
+import TPIInfographic from '@/components/tpi/TPIInfographic';
+import TPISectionCard from '@/components/tpi/TPISectionCard';
+import TPIClosingQuote from '@/components/tpi/TPIClosingQuote';
 
 export const metadata: Metadata = {
-  title: 'TPI',
-  description: 'Trabajo Practico Integrador del equipo Stakeholders.',
+  title: 'Trabajo Práctico Integrador',
+  description: 'Desarrollo, diagnóstico de procesos e integración técnica en ECOM Chaco S.A. por el equipo Stakeholders.',
 };
 
 export default function TpiPage() {
+  const sections = tpi.sections || [];
+
   return (
-    <main>
-      <SectionWrapper className="pt-16">
-        <GlitchTitle
-          text="Trabajo Practico Integrador"
-          as="h1"
-          className="text-[clamp(2rem,10vw,3rem)] md:text-6xl"
-        />
-      </SectionWrapper>
+    <main className="min-h-screen pb-16">
+      {/* Cabecera / Hero */}
+      <TPIHero
+        title={tpi.title}
+        description={tpi.description}
+        period={tpi.period}
+      />
 
-      <SectionWrapper>
-        <article className="rounded-2xl border border-nebula bg-deep-space/70 p-5 md:p-6">
-          <h2 className="font-exo2 text-3xl font-semibold text-white-photon">{tpi.title}</h2>
-          <p className="mt-2 text-sm text-star-light">{tpi.period}</p>
+      {/* Sección 1: Infografía de Síntesis */}
+      {tpi.infographicPath && (
+        <SectionWrapper className="py-10 md:py-14">
+          <TPIInfographic
+            src={tpi.infographicPath}
+            alt="Mapa de Síntesis del Proyecto - Diagnóstico a Transformación Organizacional"
+          />
+        </SectionWrapper>
+      )}
 
-          {tpi.isPublished ? (
-            <>
-              <p className="mt-4 text-star-light">{tpi.description}</p>
-              <p className="mt-4 text-star-light">{tpi.reflections}</p>
-            </>
-          ) : (
-            <p className="mt-4 text-star-light">
-              El TPI esta en construccion.
+      {/* Sección 2: Desarrollo del Proyecto en Timeline Vertical */}
+      {sections.length > 0 && (
+        <SectionWrapper id="desarrollo-tpi" className="py-10 md:py-14">
+          <div className="mx-auto max-w-4xl">
+            <div className="mb-10 text-center md:text-left">
+              <h3 className="font-orbitron text-lg font-bold uppercase tracking-wider text-electric-purple">
+                Desarrollo del Proyecto
+              </h3>
+              <p className="mt-2 text-sm text-star-light">
+                Etapas detalladas de diagnóstico, ingeniería de procesos, propuesta técnica y gestión del cambio.
+              </p>
+            </div>
+
+            <div className="relative mt-8">
+              {sections.map((section, index) => (
+                <TPISectionCard
+                  key={section.id}
+                  section={section}
+                  isLast={index === sections.length - 1}
+                />
+              ))}
+            </div>
+          </div>
+        </SectionWrapper>
+      )}
+
+      {/* Cita de Cierre y Reflexión */}
+      <SectionWrapper className="py-10">
+        <div className="mx-auto max-w-4xl">
+          {tpi.closingQuote && <TPIClosingQuote quote={tpi.closingQuote} />}
+          
+          <div className="mt-12 rounded-2xl border border-nebula/40 bg-dark-matter/30 p-6 md:p-8 backdrop-blur-sm">
+            <h4 className="font-exo2 text-lg font-bold text-white-photon mb-3">
+              Reflexión General del Equipo
+            </h4>
+            <p className="text-sm leading-relaxed text-star-light">
+              {tpi.reflections}
             </p>
-          )}
-        </article>
+          </div>
+        </div>
       </SectionWrapper>
     </main>
   );
