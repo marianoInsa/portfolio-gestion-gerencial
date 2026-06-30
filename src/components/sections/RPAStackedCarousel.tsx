@@ -2,7 +2,7 @@
 
 import type { CSSProperties } from 'react';
 import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
-import { ChevronLeftIcon, ChevronRightIcon, ExternalLinkIcon } from 'lucide-react';
+import { ChevronLeftIcon, ChevronRightIcon, ExternalLinkIcon, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   Dialog,
@@ -258,23 +258,43 @@ export default function RPAStackedCarousel({ entries }: RPAStackedCarouselProps)
 
                   {/* CTA */}
                   {isActive && (
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        openModal(activeIndex);
-                      }}
-                      className={cn(
-                        'flex items-center gap-2 rounded-lg border border-cyber-cyan/50 px-5 py-2',
-                        'font-exo2 text-sm font-semibold text-cyber-cyan',
-                        'transition-all duration-200',
-                        'hover:bg-cyber-cyan/10 hover:border-cyber-cyan hover:shadow-[0_0_12px_rgba(0,245,255,0.25)]',
-                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyber-cyan/70',
-                      )}
-                    >
-                      <ExternalLinkIcon size={14} />
-                      Ver RPA
-                    </button>
+                    <div className="flex flex-col gap-2 sm:flex-row sm:gap-3">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openModal(activeIndex);
+                        }}
+                        className={cn(
+                          'flex items-center justify-center gap-2 rounded-lg border border-cyber-cyan/50 px-4 py-2',
+                          'font-exo2 text-xs font-semibold text-cyber-cyan sm:text-sm',
+                          'transition-all duration-200',
+                          'hover:bg-cyber-cyan/10 hover:border-cyber-cyan hover:shadow-[0_0_12px_rgba(0,245,255,0.25)]',
+                          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyber-cyan/70',
+                        )}
+                      >
+                        <ExternalLinkIcon size={14} />
+                        Ver Infografía
+                      </button>
+                      <a
+                        href="https://docs.google.com/document/d/1g7eqpZFOHUjQPAOUCsEDbYbbVh1gvCuq1mL-O2GEdVc/edit?usp=sharing"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                        className={cn(
+                          'flex items-center justify-center gap-2 rounded-lg border border-white-photon/30 bg-white-photon/5 px-4 py-2',
+                          'font-exo2 text-xs font-semibold text-white-photon sm:text-sm',
+                          'transition-all duration-200',
+                          'hover:bg-white-photon/10 hover:border-white-photon/50 hover:shadow-[0_0_12px_rgba(255,255,255,0.15)]',
+                          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white-photon/70',
+                        )}
+                      >
+                        <FileText size={14} />
+                        Ver Documento
+                      </a>
+                    </div>
                   )}
                 </div>
               );

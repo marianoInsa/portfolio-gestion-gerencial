@@ -32,7 +32,7 @@
 
 🗺️ **Mapa Conceptual** — Visualización integral de las 7 unidades de la materia y sus interrelaciones
 
-🤖 **RPA** — Infografías de automatización robótica de procesos por cada integrante
+🤖 **RPA** — Rutas personales de aprendizaje por cada integrante
 
 📊 **Insights** — Dashboard interactivo con métricas de progreso, evidencias y diversidad de herramientas
 
