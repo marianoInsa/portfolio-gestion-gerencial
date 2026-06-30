@@ -43,8 +43,7 @@ export interface Challenge {
 
 export interface RPAEntry {
   memberId: string;
-  conceptMapUrl: string;
-  uploadedAt: string;
+  infographicPath: string;
   description?: string;
 }
 
